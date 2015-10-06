@@ -226,31 +226,27 @@ public class UsuarioDao {
      */
     public static ArrayList<TrabajadorDto> listarPorCargo(int cargo){
         ArrayList<TrabajadorDto> lista = new ArrayList<TrabajadorDto>();
-        
+        System.out.println("cargo " + cargo);
         try{
                 Connection conexion = Conexion.Enlace(conn);
-                String query = "SELECT * FROM cargo where idCargo=?";
+                String query = "SELECT * FROM trabajador where idCargo = ?";
                 PreparedStatement listar = conexion.prepareStatement(query);
                 listar.setInt(1, cargo);
                 ResultSet rs = listar.executeQuery();
                 while (rs.next()) {
                     TrabajadorDto dto = new TrabajadorDto();
-                   dto.setRut(rs.getString("rut"));
+                    dto.setRut(rs.getString("rut"));
                     dto.setNombre(rs.getString("nombre"));
                     dto.setApellidoP(rs.getString("apellidoP"));
                     dto.setApellidoM(rs.getString("apellidoM"));
                     dto.setUsuario(rs.getString("usuario"));
                     dto.setClave(rs.getString("clave"));
-                    if(rs.getInt("vigente") == 1)
-                    {
-                        dto.setVigente(true);
-                    }else if(rs.getInt("vigente") == 0)
-                    {
-                        dto.setVigente(false);
-                    }
-                    dto.setCargo(rs.getInt("idCargo"));
+                    dto.setVigente(rs.getBoolean("vigente"));
+                    dto.setCargo(rs.getInt("idcargo"));
                     dto.setSucursal(rs.getInt("idsucursal"));
+                    dto.setCodigoTrabajador(rs.getInt("idtrabajador"));
                     lista.add(dto);
+                    System.out.println("dto." + dto.toString());
                 }
                 listar.close();
                 conexion.close();
@@ -267,7 +263,7 @@ public class UsuarioDao {
         
         try{
                 Connection conexion = Conexion.Enlace(conn);
-                String query = "SELECT * FROM cargo where idsucursal = ?";
+                String query = "SELECT * FROM trabajador where idsucursal = ?";
                 PreparedStatement listar = conexion.prepareStatement(query);
                 listar.setInt(1, sucursal);
                 ResultSet rs = listar.executeQuery();
