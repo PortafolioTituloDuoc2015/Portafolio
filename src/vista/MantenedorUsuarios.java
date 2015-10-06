@@ -195,7 +195,6 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
         {
             vigente = false;
         }
-        System.out.println("vigente: " + vigente);
         
         TrabajadorDto trab = new TrabajadorDto();
         trab.setRut(txtRut.getText());
@@ -207,7 +206,28 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
         trab.setClave(txtClave.getText());
         trab.setCargo(cargo.buscarID(cmbCargo.getSelectedItem().toString()));
         trab.setSucursal(dao.UsuarioDao.buscarIDSucursal(cmbSucursal.getSelectedItem().toString()));
-        UsuarioDao.addUsuario(trab);
+        if(UsuarioDao.validarTrabajador(txtRut.getText()))
+        {
+            UsuarioDao.addUsuario(trab);
+            txtRut.setText(null);
+            txtNombre.setText(null);
+            txtApellidoP.setText(null);
+            txtApellidoM.setText(null);
+            txtUsuario.setText(null);
+            txtClave.setText(null);
+            txtClave.setText(null);
+        }
+        else
+        {
+            javax.swing.JOptionPane.showMessageDialog(null, "Ya existe trabajador.");
+            txtRut.setText(null);
+            /*txtNombre.setText(null);
+            txtApellidoP.setText(null);
+            txtApellidoM.setText(null);
+            txtUsuario.setText(null);
+            txtClave.setText(null);
+            txtClave.setText(null);*/
+        }
         
     }//GEN-LAST:event_btnGuardarUsuarioActionPerformed
 

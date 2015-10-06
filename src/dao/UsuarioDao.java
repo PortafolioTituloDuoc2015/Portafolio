@@ -135,7 +135,7 @@ public class UsuarioDao {
     
     /**
      * VALIDA QUE EL TRABAJADOR NO ESTE CREADO
-     * VALIDAD¿NDO POR RUT.
+     * VALIDANDO POR RUT.
      * 
      * @param trabajador
      * @return 
