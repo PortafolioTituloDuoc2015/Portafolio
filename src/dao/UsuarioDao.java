@@ -79,6 +79,7 @@ public class UsuarioDao {
             Statement stmt = conexion.createStatement();
             String query="SELECT * FROM sucursal";
             ResultSet listar = stmt.executeQuery(query);
+            modeloCombo.addElement("Seleccione");
             while(listar.next())
             {
                 modeloCombo.addElement(listar.getString("nombresucursal"));
@@ -182,8 +183,9 @@ public class UsuarioDao {
                     dto.setUsuario(rs.getString("usuario"));
                     dto.setClave(rs.getString("clave"));
                     dto.setVigente(rs.getBoolean("vigente"));
-                    dto.setCargo(rs.getInt("cargo"));
-                    dto.setCodigoTrabajador(rs.getInt("codigoTrabajador"));
+                    dto.setCargo(rs.getInt("idcargo"));
+                    dto.setSucursal(rs.getInt("idsucursal"));
+                    dto.setCodigoTrabajador(rs.getInt("idtrabajador"));
                     lista.add(dto);
                 }
                 listar.close();
@@ -246,7 +248,45 @@ public class UsuarioDao {
                     {
                         dto.setVigente(false);
                     }
-                    dto.setCargo(rs.getInt("cargo"));
+                    dto.setCargo(rs.getInt("idCargo"));
+                    dto.setSucursal(rs.getInt("idsucursal"));
+                    lista.add(dto);
+                }
+                listar.close();
+                conexion.close();
+        }catch(SQLException s){
+                System.out.println("Error SQL al listar: "+s.getMessage());
+        }catch(Exception e){
+                System.out.println("Error al listar:"+e.getMessage());
+        }
+        return lista;
+    }
+    
+    public static ArrayList<TrabajadorDto> listarPorSucursal(int sucursal){
+        ArrayList<TrabajadorDto> lista = new ArrayList<TrabajadorDto>();
+        
+        try{
+                Connection conexion = Conexion.Enlace(conn);
+                String query = "SELECT * FROM cargo where idsucursal = ?";
+                PreparedStatement listar = conexion.prepareStatement(query);
+                listar.setInt(1, sucursal);
+                ResultSet rs = listar.executeQuery();
+                while (rs.next()) {
+                    TrabajadorDto dto = new TrabajadorDto();
+                    dto.setRut(rs.getString("rut"));
+                    dto.setNombre(rs.getString("nombre"));
+                    dto.setApellidoP(rs.getString("apellidoP"));
+                    dto.setApellidoM(rs.getString("apellidoM"));
+                    dto.setUsuario(rs.getString("usuario"));
+                    dto.setClave(rs.getString("clave"));
+                    if(rs.getInt("vigente") == 1)
+                    {
+                        dto.setVigente(true);
+                    }else if(rs.getInt("vigente") == 0)
+                    {
+                        dto.setVigente(false);
+                    }
+                    dto.setSucursal(rs.getInt("idsucursal"));
                     dto.setCargo(rs.getInt("idCargo"));
                     lista.add(dto);
                 }
@@ -258,6 +298,98 @@ public class UsuarioDao {
                 System.out.println("Error al listar:"+e.getMessage());
         }
         return lista;
+    }
+    
+    /**
+     * BUSCAR TRABAJADOR POR RUT
+     * 
+     * 
+     * @param rut
+     * @return 
+     */
+    public static dto.TrabajadorDto buscarTrabajador(String rut)
+    {
+        TrabajadorDto dto = new TrabajadorDto();
+        try{
+            Connection conexion = Conexion.Enlace(conn);
+            String query = "SELECT * FROM trabajador where rut = ?";
+            PreparedStatement buscar = conexion.prepareStatement(query);
+            buscar.setString(1, rut);
+            ResultSet rs = buscar.executeQuery();
+            while (rs.next()) {
+                dto.setCodigoTrabajador(rs.getInt("idtrabajador"));
+                dto.setRut(rs.getString("rut"));
+                dto.setNombre(rs.getString("nombre"));
+                dto.setApellidoP(rs.getString("apellidop"));
+                dto.setApellidoM(rs.getString("apellidom"));
+                dto.setUsuario(rs.getString("usuario"));
+                dto.setClave(rs.getString("clave"));
+                dto.setSucursal(rs.getInt("idsucursal"));
+                dto.setCargo(rs.getInt("idcargo"));
+                if(rs.getInt("vigente") == 1)
+                {
+                    dto.setVigente(true);
+                }else if(rs.getInt("vigente") == 0)
+                {
+                    dto.setVigente(false);
+                }
+            }
+            buscar.close();
+            conexion.close();
+        }catch(SQLException s){
+                System.out.println("Error SQL al buscar: "+s.getMessage());
+        }catch(Exception e){
+                System.out.println("Error al buscar:"+e.getMessage());
+        }
+        return dto;
+    }
+    
+    /**
+     * Modificar el usuario selecionado
+     * 
+     * @param dto 
+     */
+    public static void modificarUsuario(TrabajadorDto dto){
+        try{
+            Connection conexion= Conexion.Enlace(conn);
+            String query="UPDATE trabajador SET nombre = ? , apellidop = ?, "
+                    + "apellidom = ?, usuario = ?, clave = ?, vigente = ?,"
+                    + "idsucursal = ?, idcargo = ? where idtrabajador = ?";
+            PreparedStatement modificar = conexion.prepareStatement(query);
+                modificar.setString(1,dto.getNombre());
+                //System.out.println("1: " + dto.getNombre());
+                modificar.setString(2, dto.getApellidoP());
+                //System.out.println("2: " + dto.getApellidoP());
+                modificar.setString(3, dto.getApellidoM());
+                //System.out.println("3: " + dto.getApellidoM());
+                modificar.setString(4, dto.getUsuario());
+                //System.out.println("4: " + dto.getUsuario());
+                modificar.setString(5, dto.getClave());
+                //System.out.println("5: " + dto.getClave());
+                if(dto.isVigente())
+                {
+                    modificar.setInt(6, 1);
+                }else if(!dto.isVigente())
+                {
+                    modificar.setInt(6, 0);
+                }
+                //System.out.println("5: " + dto.isVigente());
+                modificar.setInt(7, dto.getSucursal());
+                //System.out.println("7: " + dto.getSucursal());
+                modificar.setInt(8, dto.getCargo());
+                //System.out.println("8: " + dto.getCargo());
+                modificar.setInt(9, dto.getCodigoTrabajador());
+                //System.out.println("9: " + dto.getCodigoTrabajador());
+                modificar.execute();
+                modificar.close();
+                conexion.close();
+            }catch(SQLException z){
+            System.out.println("Error SQL al modificarUsuario: "+z.getMessage());
+            System.out.println("Error SQL al modificarUsuario: "+z.getCause());
+            }catch(Exception e){
+                System.out.println("Error al modificarUsuario:"+e.getMessage());
+                System.out.println("Error al modificarUsuario:"+e.getCause());
+            }
     }
     
 }

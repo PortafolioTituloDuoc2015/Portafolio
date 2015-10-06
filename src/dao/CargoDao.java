@@ -33,6 +33,7 @@ public class CargoDao {
             Statement stmt = conexion.createStatement();
             String query="SELECT * FROM CARGO";
             ResultSet listar = stmt.executeQuery(query);
+            modeloCombo.addElement("Seleccione");
             while(listar.next())
             {
                 modeloCombo.addElement(listar.getString("NOMBRECARGO"));
@@ -142,6 +143,27 @@ public class CargoDao {
             }
     }
     
-    
+    public static String obtenerCargo(int id)
+    {
+        String cargo = "";
+        try{
+            Connection conexion = Conexion.Enlace(conn);
+            String query = "SELECT nombrecargo FROM cargo where idcargo = ?";
+            PreparedStatement buscarCargo = conexion.prepareStatement(query);
+            buscarCargo.setInt(1, id);
+            ResultSet rs = buscarCargo.executeQuery();
+            while (rs.next()) {
+                cargo = rs.getString("nombrecargo");
+            }
+            buscarCargo.close();
+            conexion.close();
+        }catch(SQLException s){
+                System.out.println("Error SQL al obtenerCargo: "+s.getMessage());
+        }catch(Exception e){
+                System.out.println("Error al obtenerSucursal:"+e.getMessage());
+        }
+        
+        return cargo;
+    }
     
 }

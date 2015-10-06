@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package dao;
+import static dao.UsuarioDao.conn;
 import java.sql.*;
 import javax.swing.DefaultComboBoxModel;
 import sql.Conexion;
@@ -31,6 +32,7 @@ public class SucursalDao {
             Statement stmt = conexion.createStatement();
             String query="SELECT nombrecomuna FROM comuna";
             ResultSet listar = stmt.executeQuery(query);
+            modeloCombo.addElement("Seleccione");
             while(listar.next())
             {
                 modeloCombo.addElement(listar.getString("nombrecomuna"));
@@ -164,5 +166,32 @@ public class SucursalDao {
             }
     }
     
+    
+    public static String obtenerSucursal(int id)
+    {
+        System.out.println("obtenerSucursal");
+        String sucursal = "";
+        try{
+            System.out.println("try");
+            System.out.println("id " + id);
+            Connection conexion = Conexion.Enlace(conn);
+            String query = "SELECT nombresucursal FROM sucursal where idSucursal = ?";
+            PreparedStatement buscarSucursal = conexion.prepareStatement(query);
+            buscarSucursal.setInt(1, id);
+            ResultSet rs = buscarSucursal.executeQuery();
+            while (rs.next()) {
+                sucursal = rs.getString("nombresucursal");
+                System.out.println("sads" + sucursal);
+            }
+            buscarSucursal.close();
+            conexion.close();
+        }catch(SQLException s){
+                System.out.println("Error SQL al obtenerSucursal: "+s.getMessage());
+        }catch(Exception e){
+                System.out.println("Error al obtenerSucursal:"+e.getMessage());
+        }
+        
+        return sucursal;
+    }
     
 }
