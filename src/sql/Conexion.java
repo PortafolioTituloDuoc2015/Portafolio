@@ -10,11 +10,6 @@ import javax.swing.*;
 
 public class Conexion {
     static Connection conn=null;
-    static Statement st=null;
-    static ResultSet rs=null;
-    
- 
-    
     static String bd="XE";
     static String login="estacionamiento";
     static String password="root";
@@ -23,7 +18,7 @@ public class Conexion {
     public static Connection Enlace(Connection conn)throws SQLException    {
         try {
          Class.forName("oracle.jdbc.OracleDriver");
-         conn=DriverManager.getConnection(url, login, password);
+         conn = DriverManager.getConnection(url, login, password);
         }
         catch(ClassNotFoundException e )
         {

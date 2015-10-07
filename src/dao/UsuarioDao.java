@@ -19,7 +19,7 @@ public class UsuarioDao {
     
     static Connection conn=null;
     public static void addUsuario(TrabajadorDto dto){
-        System.out.println("------- entrando query add traajador-----");
+        //System.out.println("------- entrando query add traajador-----");
         try{
             
             //System.out.println("datos trabajador: " + dto.toString());
@@ -27,16 +27,16 @@ public class UsuarioDao {
             String query="INSERT INTO trabajador(rut, nombre, apellidoP, apellidoM, usuario, clave, vigente, idsucursal, idcargo) VALUES(?,?,?,?,?,?,?,?,?)";
             PreparedStatement agregar = conexion.prepareStatement(query);
                 agregar.setString(1, dto.getRut());
-                System.out.println("rut: " + dto.getRut());
+                //System.out.println("rut: " + dto.getRut());
                 agregar.setString(2,dto.getNombre());
-                System.out.println("Nombre: " + dto.getNombre());
+                //System.out.println("Nombre: " + dto.getNombre());
                 agregar.setString(3, dto.getApellidoP());
-                System.out.println("Apellido: " + dto.getApellidoP() +
-                        " " + dto.getApellidoM());
+                //System.out.println("Apellido: " + dto.getApellidoP() +
+                //        " " + dto.getApellidoM());
                 agregar.setString(4, dto.getApellidoM());
                 agregar.setString(5, dto.getUsuario());
-                System.out.println("Usuario y clave: " + dto.getUsuario() + " "
-                        + dto.getClave());
+                //System.out.println("Usuario y clave: " + dto.getUsuario() + " "
+                //        + dto.getClave());
                 agregar.setString(6, dto.getClave());
                 if(dto.isVigente())
                 {
@@ -47,21 +47,21 @@ public class UsuarioDao {
                 }
                 agregar.setInt(8, dto.getSucursal());
                 agregar.setInt(9, dto.getCargo());
-                System.out.println("cargo: " + dto.getCargo());
+                //System.out.println("cargo: " + dto.getCargo());
                 agregar.execute();
                 agregar.close();
                 conexion.close();
-                System.out.println("agrego usuario");
+                //System.out.println("agrego usuario");
             }catch(SQLException z){
-            System.out.println("Error SQL al agregar: "+z.getMessage());
-            System.out.println("Error SQL al agregar: "+z.getCause());
+            System.out.println("Error SQL al addUsuario: "+z.getMessage());
+            System.out.println("Error SQL al addUsuario: "+z.getCause());
             System.out.println("error 1 add trabajador");
             }catch(Exception e){
-                System.out.println("Error al agregar:"+e.getMessage());
-                System.out.println("Error al agregar:"+e.getCause());
+                System.out.println("Error al addUsuario:"+e.getMessage());
+                System.out.println("Error al addUsuario:"+e.getCause());
                 System.out.println("error 2 add trabajador");
             }
-        System.out.println("------- saliendo query add traajador-----");
+        //System.out.println("------- saliendo query add traajador-----");
     }
     
     /**
@@ -88,10 +88,10 @@ public class UsuarioDao {
             conexion.close();
         }catch(SQLException z)
         {
-            System.out.println("Error SQL al agregar: "+z.getMessage());
+            System.out.println("Error SQL al listarSucursal: "+z.getMessage());
         }catch(Exception e)
         {
-                System.out.println("Error al agregar:"+e.getMessage());
+            System.out.println("Error al listarSucursal:"+e.getMessage());
         }
         
         return modeloCombo;
@@ -123,11 +123,11 @@ public class UsuarioDao {
             
         }catch(SQLException z)
         {
-            System.out.println("Error SQL al agregar: "+z.getMessage());
+            System.out.println("Error SQL al buscarIDSucursal: "+z.getMessage());
             System.out.println("error 1");
         }catch(Exception e)
         {
-                System.out.println("Error al agregar:"+e.getMessage());
+                System.out.println("Error al buscarIDSucursal:"+e.getMessage());
                 System.out.println("error 2");
         }
         return id;
@@ -155,9 +155,9 @@ public class UsuarioDao {
             validar.close();
             conexion.close();
         }catch(SQLException z){
-            System.out.println("Error SQL al validar: "+z.getMessage());
+            System.out.println("Error SQL al validarTrabajador: "+z.getMessage());
         }catch(Exception e){
-            System.out.println("Error al validar:"+e.getMessage());
+            System.out.println("Error al validarTrabajador:"+e.getMessage());
         }
         return valido;
     }
@@ -191,9 +191,9 @@ public class UsuarioDao {
                 listar.close();
                 conexion.close();
         }catch(SQLException s){
-                System.out.println("Error SQL al listar: "+s.getMessage());
+                System.out.println("Error SQL al listarTodos: "+s.getMessage());
         }catch(Exception e){
-                System.out.println("Error al listar:"+e.getMessage());
+                System.out.println("Error al listarTodos:"+e.getMessage());
         }
         return lista;
     }
@@ -203,19 +203,23 @@ public class UsuarioDao {
      * ELIMINA UN TRABAJADOR POR RUT
      * @param trabajador 
      */
-    public static void eliminarTrabajador(String trabajador){
+    public static boolean eliminarTrabajador(String trabajador){
+        boolean elimino = false;
         try{
                 Connection conexion = Conexion.Enlace(conn);
                 String query = "DELETE FROM trabajador WHERE rut=?";
                 PreparedStatement eliminar = conexion.prepareStatement(query);
                 eliminar.setString(1, trabajador);
+                eliminar.execute();
                 eliminar.close();
                 conexion.close();
+                elimino = true;
             }catch(SQLException z){
-            System.out.println("Error SQL al eliminar: "+z.getMessage());
+            System.out.println("Error SQL al eliminarTrabajador: "+z.getMessage());
             }catch(Exception e){
-                System.out.println("Error al eliminar:"+e.getMessage());
+                System.out.println("Error al eliminarTrabajador:"+e.getMessage());
             }
+        return elimino;
     }
     
     
@@ -251,9 +255,9 @@ public class UsuarioDao {
                 listar.close();
                 conexion.close();
         }catch(SQLException s){
-                System.out.println("Error SQL al listar: "+s.getMessage());
+                System.out.println("Error SQL al listarPorCargo: "+s.getMessage());
         }catch(Exception e){
-                System.out.println("Error al listar:"+e.getMessage());
+                System.out.println("Error al listarPorCargo:"+e.getMessage());
         }
         return lista;
     }
@@ -289,9 +293,9 @@ public class UsuarioDao {
                 listar.close();
                 conexion.close();
         }catch(SQLException s){
-                System.out.println("Error SQL al listar: "+s.getMessage());
+                System.out.println("Error SQL al listarPorSucursal: "+s.getMessage());
         }catch(Exception e){
-                System.out.println("Error al listar:"+e.getMessage());
+                System.out.println("Error al listarPorSucursal:"+e.getMessage());
         }
         return lista;
     }
@@ -333,9 +337,9 @@ public class UsuarioDao {
             buscar.close();
             conexion.close();
         }catch(SQLException s){
-                System.out.println("Error SQL al buscar: "+s.getMessage());
+                System.out.println("Error SQL al buscarTrabajador: "+s.getMessage());
         }catch(Exception e){
-                System.out.println("Error al buscar:"+e.getMessage());
+                System.out.println("Error al buscarTrabajador:"+e.getMessage());
         }
         return dto;
     }

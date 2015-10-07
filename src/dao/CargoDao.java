@@ -7,8 +7,11 @@ package dao;
 
 //import static dao.UsuarioDao.conn;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import sql.Conexion;
+import vista.Cargo;
 
 
 /**
@@ -19,6 +22,27 @@ public class CargoDao {
     
     static Connection conn=null;
     
+    
+    /**
+     * agregar cargo
+     */
+    public static void agregarCargo(String cargo){
+        try{
+               conn = sql.Conexion.Enlace(conn);
+               String sqlinsertar="insert into cargo (nombrecargo) values (?)";
+               PreparedStatement agregar=conn.prepareStatement(sqlinsertar);
+               agregar.setString(1, cargo);
+               agregar.execute();
+               agregar.close();
+               conn.close();
+            } catch(SQLException z)
+            {
+                System.out.println("Error SQL al agregarCargo: "+z.getMessage());
+            }catch(Exception e)
+            {
+                System.out.println("Error al agregarCargo:"+e.getMessage());
+            }
+    }
     /**
      * ESTE MEODO ESTA PARA LLENAR EL COMBOBOX DE CARGOS 
      * DONDE SEA NECESARIO USARLO.
@@ -26,7 +50,7 @@ public class CargoDao {
      * ASIGNA EN LA PARTE GRAFICA.
      * @return 
      */
-    public DefaultComboBoxModel listar(){
+    public static DefaultComboBoxModel listar(){
         DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
         try{
             Connection conexion= Conexion.Enlace(conn);
@@ -42,10 +66,10 @@ public class CargoDao {
             conexion.close();
         }catch(SQLException z)
         {
-            System.out.println("Error SQL al agregar: "+z.getMessage());
+            System.out.println("Error SQL al listar cargo: "+z.getMessage());
         }catch(Exception e)
         {
-                System.out.println("Error al agregar:"+e.getMessage());
+                System.out.println("Error al listar cargo:"+e.getMessage());
         }
         
         return modeloCombo;
@@ -57,11 +81,10 @@ public class CargoDao {
      * @param nombre
      * @return 
      */
-    public int buscarID(String nombre)
+    public static int buscarID(String nombre)
     {
         int id = -1;
         try{
-            System.out.println("-------entrando query buscar id cargo ------");
             Connection conexion= Conexion.Enlace(conn);
             String query = "SELECT IDCARGO FROM CARGO WHERE NOMBRECARGO = ?";
             PreparedStatement buscarId = conexion.prepareStatement(query);
@@ -78,14 +101,11 @@ public class CargoDao {
             
         }catch(SQLException z)
         {
-            System.out.println("Error SQL al agregar: "+z.getMessage());
-            System.out.println("error 1");
+            System.out.println("Error SQL al buscarID cargo: "+z.getMessage());
         }catch(Exception e)
         {
-                System.out.println("Error al agregar:"+e.getMessage());
-                System.out.println("error 2");
+                System.out.println("Error al buscarID cargo:"+e.getMessage());
         }
-        System.out.println("-------saliendo query--------");
         return id;
         
     }
@@ -114,9 +134,9 @@ public class CargoDao {
             validar.close();
             conexion.close();
         }catch(SQLException z){
-            System.out.println("Error SQL al validar: "+z.getMessage());
+            System.out.println("Error SQL al validarCargo: "+z.getMessage());
         }catch(Exception e){
-            System.out.println("Error al validar:"+e.getMessage());
+            System.out.println("Error al validarCargo:"+e.getMessage());
         }
         return valido;
     }
@@ -137,9 +157,9 @@ public class CargoDao {
                 eliminar.close();
                 conexion.close();
             }catch(SQLException z){
-            System.out.println("Error SQL al eliminar: "+z.getMessage());
+            System.out.println("Error SQL al eliminarCargo: "+z.getMessage());
             }catch(Exception e){
-                System.out.println("Error al eliminar:"+e.getMessage());
+                System.out.println("Error al elimeliminarCargoinar:"+e.getMessage());
             }
     }
     

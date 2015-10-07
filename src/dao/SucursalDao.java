@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package dao;
-import static dao.UsuarioDao.conn;
 import java.sql.*;
 import javax.swing.DefaultComboBoxModel;
 import sql.Conexion;
@@ -41,10 +40,10 @@ public class SucursalDao {
             conexion.close();
         }catch(SQLException z)
         {
-            System.out.println("Error SQL al agregar: "+z.getMessage());
+            System.out.println("Error SQL al listarComunas: "+z.getMessage());
         }catch(Exception e)
         {
-                System.out.println("Error al agregar:"+e.getMessage());
+                System.out.println("Error al listarComunas:"+e.getMessage());
         }
         
         return modeloCombo;
@@ -76,10 +75,10 @@ public class SucursalDao {
             JOptionPane.showMessageDialog(null, "Sucursal creada correctamente");
         }catch(SQLException z)
         {
-            System.out.println("Error SQL al agregar: "+z.getMessage());
+            System.out.println("Error SQL al buscarIDComuna: "+z.getMessage());
         }catch(Exception e)
         {
-                System.out.println("Error al agregar:"+e.getMessage());
+                System.out.println("Error al buscarIDComuna:"+e.getMessage());
         }
         return id;
         
@@ -137,9 +136,9 @@ public class SucursalDao {
             validar.close();
             conexion.close();
         }catch(SQLException z){
-            System.out.println("Error SQL al validar: "+z.getMessage());
+            System.out.println("Error SQL al validarSucursal: "+z.getMessage());
         }catch(Exception e){
-            System.out.println("Error al validar:"+e.getMessage());
+            System.out.println("Error al validarSucursal:"+e.getMessage());
         }
         return valido;
     }
@@ -160,9 +159,9 @@ public class SucursalDao {
                 eliminar.close();
                 conexion.close();
             }catch(SQLException z){
-            System.out.println("Error SQL al eliminar: "+z.getMessage());
+            System.out.println("Error SQL al eliminarSucursal: "+z.getMessage());
             }catch(Exception e){
-                System.out.println("Error al eliminar:"+e.getMessage());
+                System.out.println("Error al eliminarSucursal:"+e.getMessage());
             }
     }
     
@@ -172,8 +171,6 @@ public class SucursalDao {
         System.out.println("obtenerSucursal");
         String sucursal = "";
         try{
-            System.out.println("try");
-            System.out.println("id " + id);
             Connection conexion = Conexion.Enlace(conn);
             String query = "SELECT nombresucursal FROM sucursal where idSucursal = ?";
             PreparedStatement buscarSucursal = conexion.prepareStatement(query);
@@ -181,7 +178,6 @@ public class SucursalDao {
             ResultSet rs = buscarSucursal.executeQuery();
             while (rs.next()) {
                 sucursal = rs.getString("nombresucursal");
-                System.out.println("sads" + sucursal);
             }
             buscarSucursal.close();
             conexion.close();

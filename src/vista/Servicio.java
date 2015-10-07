@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package vista;
+import dao.*;
+import dto.*;
+import javax.swing.*;
 
 /**
  *
@@ -16,6 +19,7 @@ public class Servicio extends javax.swing.JFrame {
      */
     public Servicio() {
         initComponents();
+        cmbIdLavaauto.setModel(LavaAutoDao.listarLavaAuto());
     }
 
     /**
@@ -32,34 +36,31 @@ public class Servicio extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        cmbTipoServicio = new javax.swing.JComboBox();
         txtDescripcion = new javax.swing.JTextField();
         txtPrecioServicio = new javax.swing.JTextField();
-        txtComision = new javax.swing.JTextField();
-        btnEmitirOrdenServicio = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        cmbIdLavaauto = new javax.swing.JComboBox();
+        txtNombre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Servicios");
+        jLabel1.setText("SERVICIOS");
 
-        jLabel2.setText("Tipo de Servicio");
+        jLabel2.setText("NOMBRE");
 
-        jLabel3.setText("Descripcion");
+        jLabel3.setText("DESCRIPCION");
 
-        jLabel4.setText("Precio");
+        jLabel4.setText("PRECIO");
 
-        jLabel5.setText("Comisión");
-
-        cmbTipoServicio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Lavado", "Secado", "Encerar", " " }));
+        jLabel5.setText("SUCURSAL LAVA AUTO");
 
         txtPrecioServicio.setToolTipText("");
 
-        txtComision.setEditable(false);
-
-        btnEmitirOrdenServicio.setText("Emitir Orden Servicio");
-        btnEmitirOrdenServicio.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregar.setText("AGREGAR SERVICIO");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEmitirOrdenServicioActionPerformed(evt);
+                btnAgregarActionPerformed(evt);
             }
         });
 
@@ -68,66 +69,91 @@ public class Servicio extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(44, 44, 44))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(65, 65, 65)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
                                     .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addGap(77, 77, 77)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnEmitirOrdenServicio)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtDescripcion)
-                                .addComponent(cmbTipoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtPrecioServicio)
-                                .addComponent(txtComision, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)))))
-                .addContainerGap(70, Short.MAX_VALUE))
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel3))
+                                .addGap(36, 36, 36)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnAgregar)
+                                    .addComponent(txtDescripcion)
+                                    .addComponent(txtPrecioServicio)
+                                    .addComponent(cmbIdLavaauto, 0, 209, Short.MAX_VALUE)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1))
+                        .addGap(0, 34, Short.MAX_VALUE)))
+                .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, jLabel5});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAgregar, cmbIdLavaauto, txtDescripcion, txtNombre, txtPrecioServicio});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addGap(25, 25, 25)
+                .addGap(9, 9, 9)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(cmbTipoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(txtPrecioServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPrecioServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(txtComision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(btnEmitirOrdenServicio)
-                .addGap(26, 26, 26))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbIdLavaauto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addComponent(btnAgregar)
+                .addGap(26, 37, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, jLabel5});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEmitirOrdenServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmitirOrdenServicioActionPerformed
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEmitirOrdenServicioActionPerformed
+        
+        boolean agrego = false;
+        
+        if(txtNombre.getText().length() > 0 && txtDescripcion.getText().length() > 0 
+                && txtPrecioServicio.getText().length() > 0 
+                && !cmbIdLavaauto.getSelectedItem().toString().equals("Seleccione"))
+            {
+                ServicioDto dto = new ServicioDto();
+                dto.setNombreServicio(txtNombre.getText());
+                dto.setDescripcion(txtDescripcion.getText());
+                dto.setPrecio(Integer.valueOf(txtPrecioServicio.getText()));
+                dto.setIdLavaauto(LavaAutoDao.buscarIdLavaAuto(cmbIdLavaauto.getSelectedItem().toString()));
+                agrego = ServicioDao.agregarServicio(dto);  
+                txtNombre.setText(null);
+                txtDescripcion.setText(null);
+                txtPrecioServicio.setText(null);
+                cmbIdLavaauto.setSelectedItem("Seleccione");
+                JOptionPane.showMessageDialog(null, "Servicio agregado correctamente");
+        }else
+        {
+            JOptionPane.showMessageDialog(null, "No se pudo agregar\nDebe llenar los campos");
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,15 +191,16 @@ public class Servicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEmitirOrdenServicio;
-    private javax.swing.JComboBox cmbTipoServicio;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JComboBox cmbIdLavaauto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField txtComision;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecioServicio;
     // End of variables declaration//GEN-END:variables
 }

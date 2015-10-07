@@ -7,7 +7,7 @@ package vista;
 import dao.*;
 import dto.TrabajadorDto;
 import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -21,26 +21,33 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
      * Creates new form MantenedorUsuarios
      */
     
-    CargoDao cargo = new CargoDao();
-    DefaultComboBoxModel cmbo = cargo.listar();
-    DefaultComboBoxModel cmboSucursal = UsuarioDao.listarSucursal();
+    //CargoDao cargo = new CargoDao();
+    //DefaultComboBoxModel cmbo = cargo.listar();
+    //DefaultComboBoxModel cmboSucursal = UsuarioDao.listarSucursal();
     
     public MantenedorUsuarios() {
         
         initComponents();
-        cmbCargo.setModel(cmbo);
-        cmbCargoB.setModel(cmbo);
-        cmbCargoL.setModel(cmbo);
-        cmbSucursal.setModel(cmboSucursal);
-        cmbSucursalB.setModel(cmboSucursal);
-        cmbSucursalL.setModel(cmboSucursal);
+        cmbCargo.setModel(CargoDao.listar());
+        cmbCargoB.setModel(CargoDao.listar());
+        cmbCargoL.setModel(CargoDao.listar());
+        cmbSucursal.setModel(UsuarioDao.listarSucursal());
+        cmbSucursalB.setModel(UsuarioDao.listarSucursal());
+        cmbSucursalL.setModel(UsuarioDao.listarSucursal());
         llenarLista();
         
     }
     
+    public DefaultTableModel modelo(){
+        DefaultTableModel modelo = new DefaultTableModel();
+        return modelo;
+    }
+    
     public void llenarLista()
     {
-        DefaultTableModel modeloT = (DefaultTableModel)tblTrabajadores.getModel();
+        LimpiarJTable();
+        DefaultTableModel modeloT = modelo();
+        modeloT = (DefaultTableModel)tblTrabajadores.getModel();
         ArrayList<TrabajadorDto> lista = UsuarioDao.listarTodos();
         Object[] fila = new Object[modeloT.getColumnCount()];
         for(int i = 0; i < lista.size(); i++)
@@ -136,7 +143,8 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         lblIdTrabajador = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTrabajadores = new javax.swing.JTable();
@@ -268,13 +276,13 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
                         .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
                             .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,43 +294,44 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(11, 11, 11)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
                             .addComponent(txtApellidoM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10)
                             .addComponent(cmbSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(9, 9, 9)
                         .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(cmbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(rbtSi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rbtNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(rbtSi)
+                                .addComponent(rbtNo)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(9, 9, 9)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
                             .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
                             .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGuardarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnGuardarUsuario))
                     .addComponent(jSeparator12))
                 .addContainerGap())
         );
@@ -378,16 +387,26 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Limpiar formulario");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpiar.setText("Limpiar formulario");
+        btnLimpiar.setEnabled(false);
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -436,14 +455,10 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)))
+                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtApellidoMB, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jSeparator19, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jSeparator18, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -457,26 +472,32 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
                                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtUsuarioB, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtApellidoMB, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
+                .addContainerGap(80, Short.MAX_VALUE)
                 .addComponent(lblIdTrabajador, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
                     .addComponent(txtRutB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
                     .addComponent(txtNombreB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnModificar))
                 .addGap(2, 2, 2)
@@ -485,43 +506,45 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtApellidoPB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(jButton1))
+                    .addComponent(btnEliminar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
+                .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtApellidoMB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel14)
+                    .addComponent(txtApellidoMB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15)
                     .addComponent(cmbSucursalB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
                     .addComponent(cmbCargoB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbtSiB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbtNoB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rbtSiB)
+                        .addComponent(rbtNoB)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18)
                     .addComponent(txtUsuarioB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19)
                     .addComponent(txtClaveB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -688,7 +711,7 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
         trab.setVigente(vigente);
         trab.setUsuario(txtUsuario.getText());
         trab.setClave(txtClave.getText());
-        trab.setCargo(cargo.buscarID(cmbCargo.getSelectedItem().toString()));
+        trab.setCargo(CargoDao.buscarID(cmbCargo.getSelectedItem().toString()));
         trab.setSucursal(dao.UsuarioDao.buscarIDSucursal(cmbSucursal.getSelectedItem().toString()));
         if(UsuarioDao.validarTrabajador(txtRut.getText()))
         {
@@ -727,10 +750,8 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
         txtApellidoMB.setText(dto.getApellidoM());
         txtApellidoMB.setEnabled(true);
         cmbSucursalB.setSelectedItem(SucursalDao.obtenerSucursal(dto.getSucursal()));
-        //System.out.println("sucursal " + SucursalDao.obtenerSucursal(dto.getCodigoTrabajador()));
         cmbSucursalB.setEnabled(true);
         cmbCargoB.setSelectedItem(CargoDao.obtenerCargo(dto.getCargo()));
-        System.out.println("cargo " + CargoDao.obtenerCargo(dto.getCargo()));
         cmbCargoB.setEnabled(true);
         txtUsuarioB.setText(dto.getUsuario());
         txtUsuarioB.setEnabled(true);
@@ -746,6 +767,10 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
         rbtSiB.setEnabled(true);
         rbtNoB.setEnabled(true);
         lblIdTrabajador.setText(String.valueOf(dto.getCodigoTrabajador()));
+        btnBuscar.setEnabled(false);
+        btnLimpiar.setEnabled(true);
+        btnModificar.setEnabled(true);
+        btnEliminar.setEnabled(true);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -769,7 +794,7 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
         trab.setVigente(vigente);
         trab.setUsuario(txtUsuarioB.getText());
         trab.setClave(txtClaveB.getText());
-        trab.setCargo(cargo.buscarID(cmbCargoB.getSelectedItem().toString()));
+        trab.setCargo(CargoDao.buscarID(cmbCargoB.getSelectedItem().toString()));
         trab.setSucursal(dao.UsuarioDao.buscarIDSucursal(cmbSucursalB.getSelectedItem().toString()));
         UsuarioDao.modificarUsuario(trab);
         txtRutB.setText(null);
@@ -789,12 +814,15 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
         rbtSiB.setEnabled(false);
         rbtNoB.setEnabled(false);
         lblIdTrabajador.setText(null);
-        
+        btnBuscar.setEnabled(true);
+        btnLimpiar.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
 
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
         txtRutB.setText(null);
         txtRutB.setEditable(true);
@@ -813,11 +841,17 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
         rbtSiB.setEnabled(false);
         rbtNoB.setEnabled(false);
         lblIdTrabajador.setText(null);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        btnBuscar.setEnabled(true);
+        btnLimpiar.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnListarXSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarXSucursalActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel modeloS = (DefaultTableModel)tblTrabajadores.getModel();
+        LimpiarJTable();
+        DefaultTableModel modeloS = new DefaultTableModel();
+        modeloS = (DefaultTableModel)tblTrabajadores.getModel();
         ArrayList<TrabajadorDto> lista = UsuarioDao.listarPorSucursal(UsuarioDao.buscarIDSucursal(cmbSucursalL.getSelectedItem().toString()));
         Object[] fila = new Object[modeloS.getColumnCount()];
         for(int i = 0; i < lista.size(); i++)
@@ -838,9 +872,10 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
 
     private void btnListarXCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarXCargoActionPerformed
         // TODO add your handling code here:
-        //reiniciarJTable(tblTrabajadores);
-        DefaultTableModel modeloC = (DefaultTableModel)tblTrabajadores.getModel();
-        ArrayList<TrabajadorDto> lista = UsuarioDao.listarPorCargo(cargo.buscarID(cmbCargoL.getSelectedItem().toString()));
+        LimpiarJTable();
+        DefaultTableModel modeloC = modelo();
+        modeloC = (DefaultTableModel)tblTrabajadores.getModel();
+        ArrayList<TrabajadorDto> lista = UsuarioDao.listarPorCargo(CargoDao.buscarID(cmbCargoL.getSelectedItem().toString()));
         Object[] fila = new Object[modeloC.getColumnCount()];
         for(int i = 0; i < lista.size(); i++)
         {
@@ -864,14 +899,46 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
         llenarLista();
     }//GEN-LAST:event_btnTodosActionPerformed
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        
+        boolean elimino = UsuarioDao.eliminarTrabajador(txtRutB.getText());
+        if(elimino){
+            javax.swing.JOptionPane.showMessageDialog(null, "Eliminado correctamente");
+            txtRutB.setText(null);
+            txtRutB.setEditable(true);
+            txtNombreB.setText(null);
+            txtNombreB.setEnabled(false);
+            txtApellidoPB.setText(null);
+            txtApellidoPB.setEnabled(false);
+            txtApellidoMB.setText(null);
+            txtApellidoMB.setEnabled(false);
+            txtUsuarioB.setText(null);
+            txtUsuarioB.setEnabled(false);
+            txtClaveB.setText(null);
+            txtClaveB.setEnabled(false);
+            cmbCargoB.setEnabled(false);
+            cmbSucursalB.setEnabled(false);
+            rbtSiB.setEnabled(false);
+            rbtNoB.setEnabled(false);
+            lblIdTrabajador.setText(null);
+            btnBuscar.setEnabled(true);
+            btnLimpiar.setEnabled(false);
+            btnModificar.setEnabled(false);
+            btnEliminar.setEnabled(false);
+        }else
+            javax.swing.JOptionPane.showMessageDialog(null, "No Eliminado.");
+            
+    }//GEN-LAST:event_btnEliminarActionPerformed
     
-    public static void reiniciarJTable(javax.swing.JTable Tabla){
-        DefaultTableModel modelo = (DefaultTableModel) Tabla.getModel();
-        while(modelo.getRowCount()>0)modelo.removeRow(0);
- 
-        TableColumnModel modCol = Tabla.getColumnModel();
-        while(modCol.getColumnCount()>0)modCol.removeColumn(modCol.getColumn(0));
+    void LimpiarJTable(){
+        DefaultTableModel modelo = (DefaultTableModel) tblTrabajadores.getModel();
+        while(modelo.getRowCount()>0){
+            modelo.removeRow(0);
+        }
     }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -909,7 +976,9 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardarUsuario;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnListarXCargo;
     private javax.swing.JButton btnListarXSucursal;
     private javax.swing.JButton btnModificar;
@@ -921,7 +990,6 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
     private javax.swing.JComboBox cmbSucursalB;
     private javax.swing.JComboBox cmbSucursalL;
     private javax.swing.ButtonGroup groupVigente;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

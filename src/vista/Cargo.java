@@ -77,20 +77,8 @@ public class Cargo extends javax.swing.JFrame {
 
     private void btnCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargoActionPerformed
         // TODO add your handling code here:
-        try{
-           conn = sql.Conexion.Enlace(conn);
-           String sqlinsertar="insert into cargo values (?,?)";
-           PreparedStatement psta=conn.prepareStatement(sqlinsertar);
-           psta.setInt(1, 1);
-           psta.setString(2, txtCargo.getText());
-           psta.execute();
-           psta.close();
-            System.out.println("funco");
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Cargo.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getCause() + "\nNO FUNCA!!!!");
-        }
+        dao.CargoDao.agregarCargo(txtCargo.getText());
+        txtCargo.setText(null);
     }//GEN-LAST:event_btnCargoActionPerformed
 
     /**
