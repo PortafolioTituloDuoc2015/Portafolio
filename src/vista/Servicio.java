@@ -6,7 +6,10 @@
 package vista;
 import dao.*;
 import dto.*;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,6 +23,40 @@ public class Servicio extends javax.swing.JFrame {
     public Servicio() {
         initComponents();
         cmbIdLavaauto.setModel(LavaAutoDao.listarLavaAuto());
+        cmbIdLavaautoB.setModel(LavaAutoDao.listarLavaAuto());
+        cmbLavaautoL.setModel(LavaAutoDao.listarLavaAuto());
+        llenarLista(ServicioDao.listarTodos());
+    }
+    
+    
+    public DefaultTableModel modeloSalida(){
+        DefaultTableModel modelo = new DefaultTableModel();
+        return modelo;
+    }
+    
+    public void llenarLista(ArrayList<ServicioDto> array)
+    {
+        LimpiarJTable();
+        DefaultTableModel modeloT = modeloSalida();
+        modeloT = (DefaultTableModel)jTableServicios.getModel();
+        ArrayList<ServicioDto> lista = array;
+        Object[] fila = new Object[modeloT.getColumnCount()];
+        for(int i = 0; i < lista.size(); i++)
+        {
+            fila[0] = lista.get(i).getIdServicio();
+            fila[1] = lista.get(i).getNombreServicio();
+            fila[2] = lista.get(i).getDescripcion();
+            fila[3] = lista.get(i).getPrecio();
+            fila[4] = LavaAutoDao.obtenerLavaauto(lista.get(i).getIdLavaauto());
+            modeloT.addRow(fila);
+        }
+    }
+    
+    void LimpiarJTable(){
+        DefaultTableModel modelo = (DefaultTableModel) jTableServicios.getModel();
+        while(modelo.getRowCount()>0){
+            modelo.removeRow(0);
+        }
     }
 
     /**
@@ -31,6 +68,8 @@ public class Servicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -42,6 +81,25 @@ public class Servicio extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         cmbIdLavaauto = new javax.swing.JComboBox();
         txtNombre = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        txtNombreB = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtDescripcionB = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtPrecioServicioB = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        cmbIdLavaautoB = new javax.swing.JComboBox();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        btnBuscarServicio = new javax.swing.JButton();
+        lblIdServicio = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        cmbLavaautoL = new javax.swing.JComboBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableServicios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,6 +114,11 @@ public class Servicio extends javax.swing.JFrame {
         jLabel5.setText("SUCURSAL LAVA AUTO");
 
         txtPrecioServicio.setToolTipText("");
+        txtPrecioServicio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioServicioKeyTyped(evt);
+            }
+        });
 
         btnAgregar.setText("AGREGAR SERVICIO");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -64,67 +127,280 @@ public class Servicio extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtPrecioServicio))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtDescripcion))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(36, 36, 36)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(36, 36, 36)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnAgregar)
+                                    .addComponent(cmbIdLavaauto, 0, 209, Short.MAX_VALUE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel1)))
+                .addContainerGap(309, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jSeparator1)
+                    .addContainerGap()))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, jLabel5});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAgregar, cmbIdLavaauto, txtDescripcion, txtNombre, txtPrecioServicio});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPrecioServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbIdLavaauto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAgregar)
+                .addContainerGap(120, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(50, 50, 50)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(320, Short.MAX_VALUE)))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, jLabel5});
+
+        jTabbedPane1.addTab("AGREGAR SERVICIOS", jPanel1);
+
+        jLabel6.setText("NOMBRE");
+
+        jLabel7.setText("DESCRIPCION");
+
+        txtDescripcionB.setEnabled(false);
+
+        jLabel8.setText("PRECIO");
+
+        txtPrecioServicioB.setToolTipText("");
+        txtPrecioServicioB.setEnabled(false);
+        txtPrecioServicioB.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioServicioBKeyTyped(evt);
+            }
+        });
+
+        jLabel9.setText("SUCURSAL LAVA AUTO");
+
+        btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setText("Limpiar formulario");
+        btnLimpiar.setEnabled(false);
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        btnBuscarServicio.setText("Buscar");
+        btnBuscarServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarServicioActionPerformed(evt);
+            }
+        });
+
+        lblIdServicio.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(59, 59, 59)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtPrecioServicioB, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtDescripcionB, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel6))
+                        .addGap(59, 59, 59)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(cmbIdLavaautoB, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblIdServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtNombreB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel8))
+                .addGap(18, 18, 18))
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cmbIdLavaautoB, txtDescripcionB, txtNombreB, txtPrecioServicioB});
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel6, jLabel7, jLabel8, jLabel9});
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnBuscarServicio, btnEliminar, btnLimpiar, btnModificar});
+
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblIdServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(txtNombreB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscarServicio))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnModificar)
+                            .addComponent(cmbIdLavaautoB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEliminar)
+                            .addComponent(jLabel8)
+                            .addComponent(txtPrecioServicioB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addGap(122, 122, 122))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnLimpiar)
+                            .addComponent(txtDescripcionB, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+
+        jTabbedPane1.addTab("BUSCAR Y MODIFICAR", jPanel2);
+
+        jLabel10.setText("SUCURSAL LAVA AUTO");
+
+        cmbLavaautoL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbLavaautoLActionPerformed(evt);
+            }
+        });
+
+        jTableServicios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "NOMBRE", "DESCRIPCION", "PRECIO", "SUCURSAL LAVA AUTO"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableServicios);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbLavaautoL, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(cmbLavaautoL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("LISTADO DE SERVICIOS", jPanel3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel3))
-                                .addGap(36, 36, 36)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnAgregar)
-                                    .addComponent(txtDescripcion)
-                                    .addComponent(txtPrecioServicio)
-                                    .addComponent(cmbIdLavaauto, 0, 209, Short.MAX_VALUE)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel1))
-                        .addGap(0, 34, Short.MAX_VALUE)))
-                .addContainerGap())
+            .addComponent(jTabbedPane1)
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, jLabel5});
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAgregar, cmbIdLavaauto, txtDescripcion, txtNombre, txtPrecioServicio});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPrecioServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbIdLavaauto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
-                .addComponent(btnAgregar)
-                .addGap(26, 37, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, jLabel5});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -138,22 +414,185 @@ public class Servicio extends javax.swing.JFrame {
                 && txtPrecioServicio.getText().length() > 0 
                 && !cmbIdLavaauto.getSelectedItem().toString().equals("Seleccione"))
             {
-                ServicioDto dto = new ServicioDto();
-                dto.setNombreServicio(txtNombre.getText());
-                dto.setDescripcion(txtDescripcion.getText());
-                dto.setPrecio(Integer.valueOf(txtPrecioServicio.getText()));
-                dto.setIdLavaauto(LavaAutoDao.buscarIdLavaAuto(cmbIdLavaauto.getSelectedItem().toString()));
-                agrego = ServicioDao.agregarServicio(dto);  
-                txtNombre.setText(null);
-                txtDescripcion.setText(null);
-                txtPrecioServicio.setText(null);
-                cmbIdLavaauto.setSelectedItem("Seleccione");
-                JOptionPane.showMessageDialog(null, "Servicio agregado correctamente");
+                if(ServicioDao.validarServicio(txtNombre.getText(), 
+                        LavaAutoDao.buscarIdLavaAuto(cmbIdLavaauto.getSelectedItem().toString())))
+                {
+                    ServicioDto dto = new ServicioDto();
+                    dto.setNombreServicio(txtNombre.getText());
+                    dto.setDescripcion(txtDescripcion.getText());
+                    dto.setPrecio(Integer.valueOf(txtPrecioServicio.getText()));
+                    dto.setIdLavaauto(LavaAutoDao.buscarIdLavaAuto(cmbIdLavaauto.getSelectedItem().toString()));
+                    agrego = ServicioDao.agregarServicio(dto);  
+                    txtNombre.setText(null);
+                    txtDescripcion.setText(null);
+                    txtPrecioServicio.setText(null);
+                    cmbIdLavaauto.setSelectedItem("Seleccione");
+                    if(agrego)
+                    {
+                        JOptionPane.showMessageDialog(null, "Servicio agregado correctamente");
+                        txtNombre.setText(null);
+                        txtDescripcion.setText(null);
+                        txtPrecioServicio.setText(null);
+                        cmbIdLavaauto.setSelectedItem("Seleccione");
+                    }else
+                        JOptionPane.showMessageDialog(null, "ocurrio un error UPS! lo sentimos");
+                    
+                }else
+                {
+                    JOptionPane.showMessageDialog(null, "Servicio ya existe en sucursal");
+                }
+                
         }else
         {
             JOptionPane.showMessageDialog(null, "No se pudo agregar\nDebe llenar los campos");
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnBuscarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioActionPerformed
+        //TODO add your handling code here:
+        ServicioDto dto = new ServicioDto();
+        
+        if(txtNombreB.getText().length() > 0 &&
+            !cmbIdLavaautoB.getSelectedItem().toString().equalsIgnoreCase("seleccione"))
+        {
+            dto = ServicioDao.buscarServicio(txtNombreB.getText(),
+                LavaAutoDao.buscarIdLavaAuto(cmbIdLavaautoB.getSelectedItem().toString()));
+            lblIdServicio.setText(String.valueOf(dto.getIdServicio()));
+            if(dto.getIdServicio() == 0)
+            {
+                JOptionPane.showMessageDialog(null, "NO se encontro servicio en sucusal");
+                lblIdServicio.setText(null);
+                txtNombreB.setText(null);
+                cmbIdLavaautoB.setSelectedItem("Seleccione");
+            }
+            else
+            {
+                txtNombreB.setText(dto.getNombreServicio());
+                txtDescripcionB.setText(dto.getDescripcion());
+                txtPrecioServicioB.setText(String.valueOf(dto.getPrecio()));
+                cmbIdLavaautoB.setSelectedItem(LavaAutoDao.obtenerLavaauto(dto.getIdLavaauto()));
+                txtNombreB.setEnabled(true);
+                txtDescripcionB.setEnabled(true);
+                txtPrecioServicioB.setEnabled(true);
+                cmbIdLavaautoB.setEnabled(true);
+                btnBuscarServicio.setEnabled(false);
+                btnLimpiar.setEnabled(true);
+                btnModificar.setEnabled(true);
+                btnEliminar.setEnabled(true);  
+            }
+            
+            
+        }else{
+            
+        }
+    }//GEN-LAST:event_btnBuscarServicioActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        ServicioDto dto = new ServicioDto();
+        
+        dto.setIdServicio(Integer.valueOf(lblIdServicio.getText()));
+        dto.setNombreServicio(txtNombreB.getText());
+        dto.setDescripcion(txtDescripcionB.getText());
+        dto.setPrecio(Integer.valueOf(txtPrecioServicioB.getText()));
+        dto.setIdLavaauto(Integer.valueOf(LavaAutoDao.buscarIdLavaAuto(cmbIdLavaautoB.getSelectedItem().toString())));
+        boolean modifico = ServicioDao.modificarServicio(dto);
+        if(modifico)
+        {
+            lblIdServicio.setText(null);
+            txtNombreB.setText(null);
+            txtPrecioServicioB.setText(null);
+            txtDescripcionB.setText(null);
+            cmbIdLavaautoB.setSelectedItem("Seleccione");
+            
+            txtNombreB.setEnabled(true);
+            cmbIdLavaautoB.setEnabled(true);
+            txtDescripcionB.setEnabled(false);
+            txtPrecioServicioB.setEnabled(false);
+            btnBuscarServicio.setEnabled(true);
+            btnLimpiar.setEnabled(false);
+            btnModificar.setEnabled(false);
+            btnEliminar.setEnabled(false);
+            
+            JOptionPane.showMessageDialog(null, "Servicio modificado correctamente");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "UPS! ocurrio un problema...\n comunicate con el administrador.");
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+            lblIdServicio.setText(null);
+            txtNombreB.setText(null);
+            txtPrecioServicioB.setText(null);
+            txtDescripcionB.setText(null);
+            cmbIdLavaautoB.setSelectedItem("Seleccione");
+            
+            txtNombreB.setEnabled(true);
+            cmbIdLavaautoB.setEnabled(true);
+            txtDescripcionB.setEnabled(false);
+            txtPrecioServicioB.setEnabled(false);
+            btnBuscarServicio.setEnabled(true);
+            btnLimpiar.setEnabled(false);
+            btnModificar.setEnabled(false);
+            btnEliminar.setEnabled(false);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        
+        boolean elimino = ServicioDao.eliminarServicio(Integer.valueOf(lblIdServicio.getText()));
+        if(elimino)
+        {
+            JOptionPane.showMessageDialog(null, "Servicio eliminado correctamente");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "UPS! ocurrio un problema...\n comunicate con el administrador.");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void cmbLavaautoLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbLavaautoLActionPerformed
+        // TODO add your handling code here:
+        llenarLista(ServicioDao.listarPorSucursal(LavaAutoDao.buscarIdLavaAuto(cmbLavaautoL.getSelectedItem().toString())));
+        
+    }//GEN-LAST:event_cmbLavaautoLActionPerformed
+
+    private void txtPrecioServicioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioServicioKeyTyped
+        // TODO add your handling code here:
+        
+        int k=(int)evt.getKeyChar();
+        if (k >= 97 && k <= 122 || k>=65 && k<=90){
+        evt.setKeyChar((char)KeyEvent.VK_CLEAR);
+        JOptionPane.showMessageDialog(null,"No puede ingresar letras!!!","Ventana Error Datos",JOptionPane.ERROR_MESSAGE);
+        }
+        if(k==241 || k==209){
+        evt.setKeyChar((char)KeyEvent.VK_CLEAR);
+        JOptionPane.showMessageDialog(null,"No puede ingresar letras!!!","Ventana Error Datos",JOptionPane.ERROR_MESSAGE);
+        }
+        if(k==10){
+        txtPrecioServicio.transferFocus();
+        }
+
+    }//GEN-LAST:event_txtPrecioServicioKeyTyped
+
+    private void txtPrecioServicioBKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioServicioBKeyTyped
+        // TODO add your handling code here:
+        int k=(int)evt.getKeyChar();
+        if (k >= 97 && k <= 122 || k>=65 && k<=90){
+        evt.setKeyChar((char)KeyEvent.VK_CLEAR);
+        JOptionPane.showMessageDialog(null,"No puede ingresar letras!!!","Ventana Error Datos",JOptionPane.ERROR_MESSAGE);
+        }
+        if(k==241 || k==209){
+        evt.setKeyChar((char)KeyEvent.VK_CLEAR);
+        JOptionPane.showMessageDialog(null,"No puede ingresar letras!!!","Ventana Error Datos",JOptionPane.ERROR_MESSAGE);
+        }
+        if(k==10){
+        txtPrecioServicio.transferFocus();
+        }
+    }//GEN-LAST:event_txtPrecioServicioBKeyTyped
 
     /**
      * @param args the command line arguments
@@ -192,15 +631,36 @@ public class Servicio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnBuscarServicio;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox cmbIdLavaauto;
+    private javax.swing.JComboBox cmbIdLavaautoB;
+    private javax.swing.JComboBox cmbLavaautoL;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTableServicios;
+    private javax.swing.JLabel lblIdServicio;
     private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtDescripcionB;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNombreB;
     private javax.swing.JTextField txtPrecioServicio;
+    private javax.swing.JTextField txtPrecioServicioB;
     // End of variables declaration//GEN-END:variables
 }

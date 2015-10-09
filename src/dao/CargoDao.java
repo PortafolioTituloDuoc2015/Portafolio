@@ -7,11 +7,8 @@ package dao;
 
 //import static dao.UsuarioDao.conn;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import sql.Conexion;
-import vista.Cargo;
 
 
 /**
@@ -184,6 +181,25 @@ public class CargoDao {
         }
         
         return cargo;
+    }
+    
+    public static ResultSet listarTodos()
+    {
+        ResultSet rs = null;
+        try{
+            Connection conexion = Conexion.Enlace(conn);
+            String query = "SELECT * FROM cargo";
+            PreparedStatement listarCargo = conexion.prepareStatement(query);
+            rs = listarCargo.executeQuery();
+            listarCargo.close();
+            conexion.close();
+        }catch(SQLException s){
+                System.out.println("Error SQL al listarTodos los cargo: "+s.getMessage());
+        }catch(Exception e){
+                System.out.println("Error al listarTodos los cargo:"+e.getMessage());
+        }
+        
+        return rs;
     }
     
 }

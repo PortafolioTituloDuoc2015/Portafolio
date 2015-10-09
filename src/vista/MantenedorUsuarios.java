@@ -9,7 +9,6 @@ import dto.TrabajadorDto;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -35,6 +34,7 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
         cmbSucursalB.setModel(UsuarioDao.listarSucursal());
         cmbSucursalL.setModel(UsuarioDao.listarSucursal());
         llenarLista();
+        rbtSi.setSelected(true);
         
     }
     
@@ -694,47 +694,55 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
 
     private void btnGuardarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarUsuarioActionPerformed
         // TODO add your handling code here:
-        boolean vigente = false;
-        if(rbtSi.isSelected())
+        if(txtRut.getText().length() == 0 
+                || txtNombre.getText().length() == 0 
+                || txtApellidoP.getText().length() == 0 
+                || txtApellidoM.getText().length() == 0
+                || txtUsuario.getText().length() == 0 
+                || txtClave.getPassword().length == 0 
+                || cmbCargo.getSelectedItem().toString().equals("Seleccione")
+                || cmbSucursal.getSelectedItem().toString().equals("Seleccione"))
         {
-            vigente = true;
-        }else if(rbtNo.isSelected())
+            javax.swing.JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
+        }else
         {
-            vigente = false;
-        }
+            boolean vigente = false;
+            if(rbtSi.isSelected())
+            {
+                vigente = true;
+            }else if(rbtNo.isSelected())
+            {
+                vigente = false;
+            }
 
-        TrabajadorDto trab = new TrabajadorDto();
-        trab.setRut(txtRut.getText());
-        trab.setNombre(txtNombre.getText());
-        trab.setApellidoP(txtApellidoP.getText());
-        trab.setApellidoM(txtApellidoM.getText());
-        trab.setVigente(vigente);
-        trab.setUsuario(txtUsuario.getText());
-        trab.setClave(txtClave.getText());
-        trab.setCargo(CargoDao.buscarID(cmbCargo.getSelectedItem().toString()));
-        trab.setSucursal(dao.UsuarioDao.buscarIDSucursal(cmbSucursal.getSelectedItem().toString()));
-        if(UsuarioDao.validarTrabajador(txtRut.getText()))
-        {
-            UsuarioDao.addUsuario(trab);
-            txtRut.setText(null);
-            txtNombre.setText(null);
-            txtApellidoP.setText(null);
-            txtApellidoM.setText(null);
-            txtUsuario.setText(null);
-            txtClave.setText(null);
-            txtClave.setText(null);
+            TrabajadorDto trab = new TrabajadorDto();
+            trab.setRut(txtRut.getText());
+            trab.setNombre(txtNombre.getText());
+            trab.setApellidoP(txtApellidoP.getText());
+            trab.setApellidoM(txtApellidoM.getText());
+            trab.setVigente(vigente);
+            trab.setUsuario(txtUsuario.getText());
+            trab.setClave(txtClave.getText());
+            trab.setCargo(CargoDao.buscarID(cmbCargo.getSelectedItem().toString()));
+            trab.setSucursal(dao.UsuarioDao.buscarIDSucursal(cmbSucursal.getSelectedItem().toString()));
+            if(UsuarioDao.validarTrabajador(txtRut.getText()))
+            {
+                UsuarioDao.addUsuario(trab);
+                txtRut.setText(null);
+                txtNombre.setText(null);
+                txtApellidoP.setText(null);
+                txtApellidoM.setText(null);
+                txtUsuario.setText(null);
+                txtClave.setText(null);
+                txtClave.setText(null);
+            }
+            else
+            {
+                javax.swing.JOptionPane.showMessageDialog(null, "Ya existe trabajador.");
+                txtRut.setText(null);
+            }
         }
-        else
-        {
-            javax.swing.JOptionPane.showMessageDialog(null, "Ya existe trabajador.");
-            txtRut.setText(null);
-            /*txtNombre.setText(null);
-            txtApellidoP.setText(null);
-            txtApellidoM.setText(null);
-            txtUsuario.setText(null);
-            txtClave.setText(null);
-            txtClave.setText(null);*/
-        }
+        
 
     }//GEN-LAST:event_btnGuardarUsuarioActionPerformed
 
@@ -742,35 +750,43 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         dto.TrabajadorDto dto = UsuarioDao.buscarTrabajador(txtRutB.getText());
-        txtRutB.setEditable(false);
-        txtNombreB.setText(dto.getNombre());
-        txtNombreB.setEnabled(true);
-        txtApellidoPB.setText(dto.getApellidoP());
-        txtApellidoPB.setEnabled(true);
-        txtApellidoMB.setText(dto.getApellidoM());
-        txtApellidoMB.setEnabled(true);
-        cmbSucursalB.setSelectedItem(SucursalDao.obtenerSucursal(dto.getSucursal()));
-        cmbSucursalB.setEnabled(true);
-        cmbCargoB.setSelectedItem(CargoDao.obtenerCargo(dto.getCargo()));
-        cmbCargoB.setEnabled(true);
-        txtUsuarioB.setText(dto.getUsuario());
-        txtUsuarioB.setEnabled(true);
-        txtClaveB.setText(dto.getClave());
-        txtClaveB.setEnabled(true);
-        if(dto.isVigente())
+        if(dto.getCodigoTrabajador() == 0)
         {
-            rbtSiB.setSelected(true);
-        }else if(!dto.isVigente())
+            JOptionPane.showMessageDialog(null, "No se encontro usuario.");
+            txtRutB.setText(null);
+        }else
         {
-            rbtNoB.setSelected(true);
+            txtRutB.setEditable(false);
+            txtNombreB.setText(dto.getNombre());
+            txtNombreB.setEnabled(true);
+            txtApellidoPB.setText(dto.getApellidoP());
+            txtApellidoPB.setEnabled(true);
+            txtApellidoMB.setText(dto.getApellidoM());
+            txtApellidoMB.setEnabled(true);
+            cmbSucursalB.setSelectedItem(SucursalDao.obtenerSucursal(dto.getSucursal()));
+            cmbSucursalB.setEnabled(true);
+            cmbCargoB.setSelectedItem(CargoDao.obtenerCargo(dto.getCargo()));
+            cmbCargoB.setEnabled(true);
+            txtUsuarioB.setText(dto.getUsuario());
+            txtUsuarioB.setEnabled(true);
+            txtClaveB.setText(dto.getClave());
+            txtClaveB.setEnabled(true);
+            if(dto.isVigente())
+            {
+                rbtSiB.setSelected(true);
+            }else if(!dto.isVigente())
+            {
+                rbtNoB.setSelected(true);
+            }
+            rbtSiB.setEnabled(true);
+            rbtNoB.setEnabled(true);
+            lblIdTrabajador.setText(String.valueOf(dto.getCodigoTrabajador()));
+            btnBuscar.setEnabled(false);
+            btnLimpiar.setEnabled(true);
+            btnModificar.setEnabled(true);
+            btnEliminar.setEnabled(true);
         }
-        rbtSiB.setEnabled(true);
-        rbtNoB.setEnabled(true);
-        lblIdTrabajador.setText(String.valueOf(dto.getCodigoTrabajador()));
-        btnBuscar.setEnabled(false);
-        btnLimpiar.setEnabled(true);
-        btnModificar.setEnabled(true);
-        btnEliminar.setEnabled(true);
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed

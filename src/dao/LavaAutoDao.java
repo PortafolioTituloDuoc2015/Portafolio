@@ -61,7 +61,6 @@ public class LavaAutoDao {
             while(rs.next())
             {
                 int idsalida = rs.getInt("idlavaauto");
-                System.out.println(idsalida);
                 id = idsalida;
             }
             buscarId.close();
@@ -77,6 +76,29 @@ public class LavaAutoDao {
                 System.out.println("error 2");
         }
         return id;
+    }
+    
+    public static String obtenerLavaauto(int id)
+    {
+        String lavaAuto = "";
+        try{
+            Connection conexion = Conexion.Enlace(conn);
+            String query = "SELECT nombre FROM lavaauto where idlavaauto = ?";
+            PreparedStatement buscar = conexion.prepareStatement(query);
+            buscar.setInt(1, id);
+            ResultSet rs = buscar.executeQuery();
+            while (rs.next()) {
+                lavaAuto = rs.getString("nombre");
+            }
+            buscar.close();
+            conexion.close();
+        }catch(SQLException s){
+                System.out.println("Error SQL al obtenerLavaauto: "+s.getMessage());
+        }catch(Exception e){
+                System.out.println("Error al obtenerLavaauto:"+e.getMessage());
+        }
+        
+        return lavaAuto;
     }
     
 }
