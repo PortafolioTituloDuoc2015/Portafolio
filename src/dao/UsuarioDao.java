@@ -18,8 +18,8 @@ import sql.Conexion;
 public class UsuarioDao {
     
     static Connection conn=null;
-    public static void addUsuario(TrabajadorDto dto){
-        //System.out.println("------- entrando query add traajador-----");
+    public static boolean addUsuario(TrabajadorDto dto){
+        boolean agrego = false;
         try{
             
             //System.out.println("datos trabajador: " + dto.toString());
@@ -51,6 +51,7 @@ public class UsuarioDao {
                 agregar.execute();
                 agregar.close();
                 conexion.close();
+                agrego = true;
                 //System.out.println("agrego usuario");
             }catch(SQLException z){
             System.out.println("Error SQL al addUsuario: "+z.getMessage());
@@ -61,6 +62,7 @@ public class UsuarioDao {
                 System.out.println("Error al addUsuario:"+e.getCause());
                 System.out.println("error 2 add trabajador");
             }
+        return agrego;
         //System.out.println("------- saliendo query add traajador-----");
     }
     
