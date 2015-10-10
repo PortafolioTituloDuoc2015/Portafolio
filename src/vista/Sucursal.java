@@ -443,7 +443,7 @@ public class Sucursal extends javax.swing.JFrame {
                 btnBuscar.setEnabled(false);
                 btnModificar.setEnabled(true);
                 btnLimpiar.setEnabled(true);
-                btnEliminar.setEnabled(true);
+                btnEliminar.setEnabled(false);
             }
         }else
         {

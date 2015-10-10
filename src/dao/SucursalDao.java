@@ -9,7 +9,6 @@ import javax.swing.DefaultComboBoxModel;
 import sql.Conexion;
 import dto.*;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 /**
  *
  * @author Yoyin
@@ -78,7 +77,7 @@ public class SucursalDao {
             System.out.println("Error SQL al buscarIDComuna: "+z.getMessage());
         }catch(Exception e)
         {
-                System.out.println("Error al buscarIDComuna:"+e.getMessage());
+            System.out.println("Error al buscarIDComuna:"+e.getMessage());
         }
         return id;
         
@@ -97,21 +96,19 @@ public class SucursalDao {
             String query="INSERT INTO sucursal(nombresucursal, "
                     + "fono, idcomuna, direccion) VALUES(?,?,?,?)";
             PreparedStatement agregar = conexion.prepareStatement(query);
-                agregar.setString(1, dto.getNombreSucursal());
-                agregar.setString(2, dto.getFono());
-                agregar.setInt(3, dto.getComuna());
-                agregar.setString(4, dto.getDireccion());
-                agregar.execute();
-                agregar.close();
-                conexion.close();
-                agrego = true;
-            }catch(SQLException z){
+            agregar.setString(1, dto.getNombreSucursal());
+            agregar.setString(2, dto.getFono());
+            agregar.setInt(3, dto.getComuna());
+            agregar.setString(4, dto.getDireccion());
+            agregar.execute();
+            agregar.close();
+            conexion.close();
+            agrego = true;
+        }catch(SQLException z){
             System.out.println("Error SQL al agregar: "+z.getMessage());
-            System.out.println("Error SQL al agregar: "+z.getCause());
-            }catch(Exception e){
-                System.out.println("Error al agregar:"+e.getMessage());
-                System.out.println("Error al agregar:"+e.getCause());
-            }
+        }catch(Exception e){
+            System.out.println("Error al agregar:"+e.getMessage());
+        }
         return agrego;
     }
     
@@ -122,20 +119,20 @@ public class SucursalDao {
             String query = "UPDATE sucursal SET nombresucursal = ?, fono = ?,"
                     + "idcomuna = ?, direccion = ? where idsucursal = ?";
             PreparedStatement modificar = conexion.prepareStatement(query);
-                modificar.setString(1, dto.getNombreSucursal());
-                modificar.setString(2, dto.getFono());
-                modificar.setInt(3, dto.getComuna());
-                modificar.setString(4, dto.getDireccion());
-                modificar.setInt(5, dto.getIdSucursal());
-                modificar.execute();
-                modificar.close();
-                conexion.close();
-                modifico = true;
-            }catch(SQLException z){
+            modificar.setString(1, dto.getNombreSucursal());
+            modificar.setString(2, dto.getFono());
+            modificar.setInt(3, dto.getComuna());
+            modificar.setString(4, dto.getDireccion());
+            modificar.setInt(5, dto.getIdSucursal());
+            modificar.execute();
+            modificar.close();
+            conexion.close();
+            modifico = true;
+         }catch(SQLException z){
             System.out.println("Error SQL al modificarSucursal: "+z.getMessage());
-            }catch(Exception e){
+        }catch(Exception e){
                 System.out.println("Error al modificarSucursal:"+e.getMessage());
-            }
+        }
         return modifico;
     }
     
@@ -196,7 +193,6 @@ public class SucursalDao {
     
     public static String obtenerSucursal(int id)
     {
-        System.out.println("obtenerSucursal");
         String sucursal = "";
         try{
             Connection conexion = Conexion.Enlace(conn);
@@ -241,7 +237,6 @@ public class SucursalDao {
     
     public static SucursalDto buscarSucursal(String nombre)
     {
-        System.out.println("obtenerSucursal");
         SucursalDto dto = new SucursalDto();
         try{
             Connection conexion = Conexion.Enlace(conn);

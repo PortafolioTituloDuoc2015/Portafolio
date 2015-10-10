@@ -5,7 +5,6 @@
  */
 package dao;
 
-import static dao.UsuarioDao.conn;
 import dto.TrabajadorDto;
 import java.sql.*;
 import sql.Conexion;
@@ -31,8 +30,6 @@ public class LoginDao {
             if(rs.next())
             {
                 login = true;
-                System.out.println("logueado correctamente");
-                
             }else
             {
                 javax.swing.JOptionPane.showMessageDialog(null, "Usuario o clave incorrecta");
@@ -45,7 +42,6 @@ public class LoginDao {
         }catch(Exception e)
         {
             System.out.println("Error al login:"+e.getMessage());
-            System.out.println("Error al login:"+e.getCause());
         }
         return login;
     }
@@ -86,7 +82,6 @@ public class LoginDao {
         }catch(Exception e)
         {
             System.out.println("Error al retornarDto:"+e.getMessage());
-            System.out.println("Error al retornarDto:"+e.getCause());
         }
         return dto;
     }

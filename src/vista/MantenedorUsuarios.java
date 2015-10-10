@@ -805,7 +805,7 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
             btnBuscar.setEnabled(false);
             btnLimpiar.setEnabled(true);
             btnModificar.setEnabled(true);
-            btnEliminar.setEnabled(true);
+            btnEliminar.setEnabled(false);
         }
         
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -958,7 +958,7 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        
+
         boolean elimino = UsuarioDao.eliminarTrabajador(txtRutB.getText());
         if(elimino){
             javax.swing.JOptionPane.showMessageDialog(null, "Eliminado correctamente");
@@ -984,8 +984,8 @@ public class MantenedorUsuarios extends javax.swing.JFrame {
             btnModificar.setEnabled(false);
             btnEliminar.setEnabled(false);
         }else
-            javax.swing.JOptionPane.showMessageDialog(null, "No Eliminado.");
-            
+        javax.swing.JOptionPane.showMessageDialog(null, "No Eliminado.");
+
     }//GEN-LAST:event_btnEliminarActionPerformed
     
     void LimpiarJTable(){

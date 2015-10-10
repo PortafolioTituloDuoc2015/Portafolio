@@ -88,9 +88,7 @@ public class ServicioDao {
             //System.out.println("buscar execute");
             if(rs.next())
             {
-                System.out.println("entro al if");
                 dto.setIdServicio(rs.getInt("idservicio"));
-                System.out.println("id servicio " + rs.getInt("idservicio"));
                 dto.setNombreServicio(rs.getString("nombre"));
                 dto.setDescripcion(rs.getString("descripcion"));
                 dto.setPrecio(rs.getInt("precio"));
@@ -126,10 +124,8 @@ public class ServicioDao {
                 modifico = true;
             }catch(SQLException z){
             System.out.println("Error SQL al modificarServicio: "+z.getMessage());
-            System.out.println("Error SQL al modificarServicio: "+z.getCause());
             }catch(Exception e){
                 System.out.println("Error al modificarServicio:"+e.getMessage());
-                System.out.println("Error al modificarServicio:"+e.getCause());
             }
         return modifico;
     }

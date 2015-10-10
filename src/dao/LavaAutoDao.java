@@ -69,11 +69,9 @@ public class LavaAutoDao {
         }catch(SQLException z)
         {
             System.out.println("Error SQL al buscarIdLavaAuto: "+z.getMessage());
-            System.out.println("error 1");
         }catch(Exception e)
         {
-                System.out.println("Error al buscarIdLavaAuto:"+e.getMessage());
-                System.out.println("error 2");
+            System.out.println("Error al buscarIdLavaAuto:"+e.getMessage());
         }
         return id;
     }

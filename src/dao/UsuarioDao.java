@@ -22,21 +22,14 @@ public class UsuarioDao {
         boolean agrego = false;
         try{
             
-            //System.out.println("datos trabajador: " + dto.toString());
             Connection conexion= Conexion.Enlace(conn);
             String query="INSERT INTO trabajador(rut, nombre, apellidoP, apellidoM, usuario, clave, vigente, idsucursal, idcargo) VALUES(?,?,?,?,?,?,?,?,?)";
             PreparedStatement agregar = conexion.prepareStatement(query);
                 agregar.setString(1, dto.getRut());
-                //System.out.println("rut: " + dto.getRut());
                 agregar.setString(2,dto.getNombre());
-                //System.out.println("Nombre: " + dto.getNombre());
                 agregar.setString(3, dto.getApellidoP());
-                //System.out.println("Apellido: " + dto.getApellidoP() +
-                //        " " + dto.getApellidoM());
                 agregar.setString(4, dto.getApellidoM());
                 agregar.setString(5, dto.getUsuario());
-                //System.out.println("Usuario y clave: " + dto.getUsuario() + " "
-                //        + dto.getClave());
                 agregar.setString(6, dto.getClave());
                 if(dto.isVigente())
                 {
@@ -47,23 +40,16 @@ public class UsuarioDao {
                 }
                 agregar.setInt(8, dto.getSucursal());
                 agregar.setInt(9, dto.getCargo());
-                //System.out.println("cargo: " + dto.getCargo());
                 agregar.execute();
                 agregar.close();
                 conexion.close();
                 agrego = true;
-                //System.out.println("agrego usuario");
             }catch(SQLException z){
             System.out.println("Error SQL al addUsuario: "+z.getMessage());
-            System.out.println("Error SQL al addUsuario: "+z.getCause());
-            System.out.println("error 1 add trabajador");
             }catch(Exception e){
                 System.out.println("Error al addUsuario:"+e.getMessage());
-                System.out.println("Error al addUsuario:"+e.getCause());
-                System.out.println("error 2 add trabajador");
             }
         return agrego;
-        //System.out.println("------- saliendo query add traajador-----");
     }
     
     /**
@@ -117,7 +103,6 @@ public class UsuarioDao {
             while(rs.next())
             {
                 int idsalida = rs.getInt("idsucursal");
-                System.out.println(idsalida);
                 id = idsalida;
             }
             buscarId.close();
@@ -126,11 +111,9 @@ public class UsuarioDao {
         }catch(SQLException z)
         {
             System.out.println("Error SQL al buscarIDSucursal: "+z.getMessage());
-            System.out.println("error 1");
         }catch(Exception e)
         {
                 System.out.println("Error al buscarIDSucursal:"+e.getMessage());
-                System.out.println("error 2");
         }
         return id;
     }
@@ -217,7 +200,7 @@ public class UsuarioDao {
                 conexion.close();
                 elimino = true;
             }catch(SQLException z){
-            System.out.println("Error SQL al eliminarTrabajador: "+z.getMessage());
+                System.out.println("Error SQL al eliminarTrabajador: "+z.getMessage());
             }catch(Exception e){
                 System.out.println("Error al eliminarTrabajador:"+e.getMessage());
             }
@@ -232,7 +215,6 @@ public class UsuarioDao {
      */
     public static ArrayList<TrabajadorDto> listarPorCargo(int cargo){
         ArrayList<TrabajadorDto> lista = new ArrayList<TrabajadorDto>();
-        System.out.println("cargo " + cargo);
         try{
                 Connection conexion = Conexion.Enlace(conn);
                 String query = "SELECT * FROM trabajador where idCargo = ?";
@@ -266,7 +248,6 @@ public class UsuarioDao {
     
     public static ArrayList<TrabajadorDto> listarPorSucursal(int sucursal){
         ArrayList<TrabajadorDto> lista = new ArrayList<TrabajadorDto>();
-        
         try{
                 Connection conexion = Conexion.Enlace(conn);
                 String query = "SELECT * FROM trabajador where idsucursal = ?";
@@ -359,15 +340,10 @@ public class UsuarioDao {
                     + "idsucursal = ?, idcargo = ? where idtrabajador = ?";
             PreparedStatement modificar = conexion.prepareStatement(query);
                 modificar.setString(1,dto.getNombre());
-                //System.out.println("1: " + dto.getNombre());
                 modificar.setString(2, dto.getApellidoP());
-                //System.out.println("2: " + dto.getApellidoP());
                 modificar.setString(3, dto.getApellidoM());
-                //System.out.println("3: " + dto.getApellidoM());
                 modificar.setString(4, dto.getUsuario());
-                //System.out.println("4: " + dto.getUsuario());
                 modificar.setString(5, dto.getClave());
-                //System.out.println("5: " + dto.getClave());
                 if(dto.isVigente())
                 {
                     modificar.setInt(6, 1);
@@ -375,22 +351,16 @@ public class UsuarioDao {
                 {
                     modificar.setInt(6, 0);
                 }
-                //System.out.println("5: " + dto.isVigente());
                 modificar.setInt(7, dto.getSucursal());
-                //System.out.println("7: " + dto.getSucursal());
                 modificar.setInt(8, dto.getCargo());
-                //System.out.println("8: " + dto.getCargo());
                 modificar.setInt(9, dto.getCodigoTrabajador());
-                //System.out.println("9: " + dto.getCodigoTrabajador());
                 modificar.execute();
                 modificar.close();
                 conexion.close();
             }catch(SQLException z){
             System.out.println("Error SQL al modificarUsuario: "+z.getMessage());
-            System.out.println("Error SQL al modificarUsuario: "+z.getCause());
             }catch(Exception e){
                 System.out.println("Error al modificarUsuario:"+e.getMessage());
-                System.out.println("Error al modificarUsuario:"+e.getCause());
             }
     }
     

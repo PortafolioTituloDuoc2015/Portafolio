@@ -478,7 +478,7 @@ public class Servicio extends javax.swing.JFrame {
                 btnBuscarServicio.setEnabled(false);
                 btnLimpiar.setEnabled(true);
                 btnModificar.setEnabled(true);
-                btnEliminar.setEnabled(true);  
+                btnEliminar.setEnabled(false);  
             }
             
             
@@ -556,6 +556,10 @@ public class Servicio extends javax.swing.JFrame {
 
     private void cmbLavaautoLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbLavaautoLActionPerformed
         // TODO add your handling code here:
+        if(cmbLavaautoL.getSelectedItem().toString().equals("Seleccione"))
+        {
+            llenarLista(ServicioDao.listarTodos());
+        }else
         llenarLista(ServicioDao.listarPorSucursal(LavaAutoDao.buscarIdLavaAuto(cmbLavaautoL.getSelectedItem().toString())));
         
     }//GEN-LAST:event_cmbLavaautoLActionPerformed

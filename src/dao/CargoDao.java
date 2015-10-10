@@ -66,7 +66,7 @@ public class CargoDao {
             System.out.println("Error SQL al listar cargo: "+z.getMessage());
         }catch(Exception e)
         {
-                System.out.println("Error al listar cargo:"+e.getMessage());
+            System.out.println("Error al listar cargo:"+e.getMessage());
         }
         
         return modeloCombo;
@@ -90,7 +90,6 @@ public class CargoDao {
             while(rs.next())
             {
                 int idsalida = rs.getInt("idcargo");
-                System.out.println(idsalida);
                 id = idsalida;
             }
             buscarId.close();
@@ -154,7 +153,7 @@ public class CargoDao {
                 eliminar.close();
                 conexion.close();
             }catch(SQLException z){
-            System.out.println("Error SQL al eliminarCargo: "+z.getMessage());
+                System.out.println("Error SQL al eliminarCargo: "+z.getMessage());
             }catch(Exception e){
                 System.out.println("Error al elimeliminarCargoinar:"+e.getMessage());
             }
@@ -165,7 +164,7 @@ public class CargoDao {
         String cargo = "";
         try{
             Connection conexion = Conexion.Enlace(conn);
-            String query = "SELECT nombrecargo FROM cargo where idcargo = ?";
+            String query = "SELECT nombrecargo FROM cargo WHERE idcargo = ?";
             PreparedStatement buscarCargo = conexion.prepareStatement(query);
             buscarCargo.setInt(1, id);
             ResultSet rs = buscarCargo.executeQuery();

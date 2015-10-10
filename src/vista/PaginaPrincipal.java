@@ -23,11 +23,11 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     
     public PaginaPrincipal() {
         initComponents();
-        
-        //iniciar como pantalla completa visible y con titulo
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
         setTitle("MANTENEDORES.");
+        
+        
     }
 
     /**
@@ -46,7 +46,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         mnuCargos = new javax.swing.JMenuItem();
         mnuUsuarios = new javax.swing.JMenuItem();
         mnuServicios = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mnuLogOut = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,13 +86,13 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(mnuServicios);
 
-        jMenuItem1.setText("Log out");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        mnuLogOut.setText("Log out");
+        mnuLogOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                mnuLogOutActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(mnuLogOut);
 
         jMenuBar1.add(jMenu1);
 
@@ -120,7 +120,8 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mnuSucursalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSucursalesActionPerformed
-        if(CargoDao.obtenerCargo(dtoReturn.getCargo()).equalsIgnoreCase("administrador"))
+        if(CargoDao.obtenerCargo(dtoReturn.getCargo()).equalsIgnoreCase("administrador") 
+                && dtoReturn.isVigente())
         {
             Sucursal sucursal = new Sucursal();
             sucursal.setVisible(true);
@@ -130,13 +131,14 @@ public class PaginaPrincipal extends javax.swing.JFrame {
             sucursal.setDefaultCloseOperation(2);
         }else
         {
-            JOptionPane.showMessageDialog(null, "NO TIENES PERFIL DE ADMINISTRADOR PARA ENTRAR");
+            JOptionPane.showMessageDialog(null, "NO TIENES PERFIL DE ADMINISTRADOR PARA ENTRAR\nO NO ESTA VIGENTE LA CUENTA.\nCONTACTE AL ADMINISTRADOR SI ESTA INFORMACION NO ES CORRECTA");
         }
     }//GEN-LAST:event_mnuSucursalesActionPerformed
 
     private void mnuCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCargosActionPerformed
         // TODO add your handling code here:
-        if(CargoDao.obtenerCargo(dtoReturn.getCargo()).equalsIgnoreCase("administrador"))
+        if(CargoDao.obtenerCargo(dtoReturn.getCargo()).equalsIgnoreCase("administrador") 
+                && dtoReturn.isVigente())
         {
             Cargo cargo = new Cargo();
             cargo.setVisible(true);
@@ -146,13 +148,14 @@ public class PaginaPrincipal extends javax.swing.JFrame {
             cargo.setDefaultCloseOperation(2);
         }else
         {
-            JOptionPane.showMessageDialog(null, "NO TIENES PERFIL DE ADMINISTRADOR PARA ENTRAR");
+            JOptionPane.showMessageDialog(null, "NO TIENES PERFIL DE ADMINISTRADOR PARA ENTRAR\nO NO ESTA VIGENTE LA CUENTA.\nCONTACTE AL ADMINISTRADOR SI ESTA INFORMACION NO ES CORRECTA");
         }
     }//GEN-LAST:event_mnuCargosActionPerformed
 
     private void mnuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuUsuariosActionPerformed
         // TODO add your handling code here:
-        if(CargoDao.obtenerCargo(dtoReturn.getCargo()).equalsIgnoreCase("administrador"))
+        if(CargoDao.obtenerCargo(dtoReturn.getCargo()).equalsIgnoreCase("administrador") 
+                && dtoReturn.isVigente())
         {
             MantenedorUsuarios usuarios = new MantenedorUsuarios();
             usuarios.setVisible(true);
@@ -162,13 +165,14 @@ public class PaginaPrincipal extends javax.swing.JFrame {
             usuarios.setDefaultCloseOperation(2);
         }else
         {
-            JOptionPane.showMessageDialog(null, "NO TIENES PERFIL DE ADMINISTRADOR PARA ENTRAR");
+            JOptionPane.showMessageDialog(null, "NO TIENES PERFIL DE ADMINISTRADOR PARA ENTRAR\nO NO ESTA VIGENTE LA CUENTA.\nCONTACTE AL ADMINISTRADOR SI ESTA INFORMACION NO ES CORRECTA");
         }
     }//GEN-LAST:event_mnuUsuariosActionPerformed
 
     private void mnuServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuServiciosActionPerformed
         // TODO add your handling code here:
-        if(CargoDao.obtenerCargo(dtoReturn.getCargo()).equalsIgnoreCase("administrador"))
+        if(CargoDao.obtenerCargo(dtoReturn.getCargo()).equalsIgnoreCase("administrador") 
+                && dtoReturn.isVigente())
         {
             Servicio servicio = new Servicio();
             servicio.setVisible(true);
@@ -178,18 +182,18 @@ public class PaginaPrincipal extends javax.swing.JFrame {
             servicio.setDefaultCloseOperation(2);
         }else
         {
-            JOptionPane.showMessageDialog(null, "NO TIENES PERFIL DE ADMINISTRADOR PARA ENTRAR");
+            JOptionPane.showMessageDialog(null, "NO TIENES PERFIL DE ADMINISTRADOR PARA ENTRAR\nO NO ESTA VIGENTE LA CUENTA.\nCONTACTE AL ADMINISTRADOR SI ESTA INFORMACION NO ES CORRECTA");
         }
     }//GEN-LAST:event_mnuServiciosActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void mnuLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLogOutActionPerformed
         // TODO add your handling code here:
         dispose();
         login log = new login();
         log.setVisible(true);
         log.setLocationRelativeTo(null);
         log.setDefaultCloseOperation(2);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_mnuLogOutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,9 +233,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     public static javax.swing.JLabel lblIdUser;
     private javax.swing.JMenuItem mnuCargos;
+    private javax.swing.JMenuItem mnuLogOut;
     private javax.swing.JMenuItem mnuServicios;
     private javax.swing.JMenuItem mnuSucursales;
     private javax.swing.JMenuItem mnuUsuarios;
