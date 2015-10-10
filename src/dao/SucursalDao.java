@@ -8,6 +8,7 @@ import java.sql.*;
 import javax.swing.DefaultComboBoxModel;
 import sql.Conexion;
 import dto.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 /**
  *
@@ -72,7 +73,6 @@ public class SucursalDao {
             }
             buscarId.close();
             conexion.close();
-            JOptionPane.showMessageDialog(null, "Sucursal creada correctamente");
         }catch(SQLException z)
         {
             System.out.println("Error SQL al buscarIDComuna: "+z.getMessage());
@@ -90,7 +90,8 @@ public class SucursalDao {
      * 
      * @param dto 
      */
-    public static void addSucursal(SucursalDto dto){
+    public static boolean addSucursal(SucursalDto dto){
+        boolean agrego = false;
         try{
             Connection conexion= Conexion.Enlace(conn);
             String query="INSERT INTO sucursal(nombresucursal, "
@@ -103,17 +104,41 @@ public class SucursalDao {
                 agregar.execute();
                 agregar.close();
                 conexion.close();
-                
+                agrego = true;
             }catch(SQLException z){
             System.out.println("Error SQL al agregar: "+z.getMessage());
             System.out.println("Error SQL al agregar: "+z.getCause());
-            System.out.println("error 1 add sucursal");
             }catch(Exception e){
                 System.out.println("Error al agregar:"+e.getMessage());
                 System.out.println("Error al agregar:"+e.getCause());
-                System.out.println("error 2 add sucursal");
             }
+        return agrego;
     }
+    
+    public static boolean modificarSucursal(SucursalDto dto){
+        boolean modifico = false;
+        try{
+            Connection conexion= Conexion.Enlace(conn);
+            String query = "UPDATE sucursal SET nombresucursal = ?, fono = ?,"
+                    + "idcomuna = ?, direccion = ? where idsucursal = ?";
+            PreparedStatement modificar = conexion.prepareStatement(query);
+                modificar.setString(1, dto.getNombreSucursal());
+                modificar.setString(2, dto.getFono());
+                modificar.setInt(3, dto.getComuna());
+                modificar.setString(4, dto.getDireccion());
+                modificar.setInt(5, dto.getIdSucursal());
+                modificar.execute();
+                modificar.close();
+                conexion.close();
+                modifico = true;
+            }catch(SQLException z){
+            System.out.println("Error SQL al modificarSucursal: "+z.getMessage());
+            }catch(Exception e){
+                System.out.println("Error al modificarSucursal:"+e.getMessage());
+            }
+        return modifico;
+    }
+    
     
     
     /**
@@ -150,19 +175,22 @@ public class SucursalDao {
      * ESTA MAL
      * @param sucursal 
      */
-    public static void eliminarSucursal(String sucursal){
+    public static boolean eliminarSucursal(int sucursal){
+        boolean elimino = false;
         try{
                 Connection conexion = Conexion.Enlace(conn);
                 String query = "DELETE FROM sucursal WHERE idSucursal=?";
                 PreparedStatement eliminar = conexion.prepareStatement(query);
-                eliminar.setString(1, sucursal);
+                eliminar.setInt(1, sucursal);
                 eliminar.close();
                 conexion.close();
+                elimino = true;
             }catch(SQLException z){
             System.out.println("Error SQL al eliminarSucursal: "+z.getMessage());
             }catch(Exception e){
                 System.out.println("Error al eliminarSucursal:"+e.getMessage());
             }
+        return elimino;
     }
     
     
@@ -188,6 +216,107 @@ public class SucursalDao {
         }
         
         return sucursal;
+    }
+    public static String obtenerComuna(int id)
+    {
+        String comuna = "";
+        try{
+            Connection conexion = Conexion.Enlace(conn);
+            String query = "SELECT * FROM comuna where idcomuna = ?";
+            PreparedStatement buscarSucursal = conexion.prepareStatement(query);
+            buscarSucursal.setInt(1, id);
+            ResultSet rs = buscarSucursal.executeQuery();
+            while (rs.next()) {
+                comuna = rs.getString("nombrecomuna");
+            }
+            buscarSucursal.close();
+            conexion.close();
+        }catch(SQLException s){
+                System.out.println("Error SQL al obtenerComuna: "+s.getMessage());
+        }catch(Exception e){
+                System.out.println("Error al obtenerComuna:"+e.getMessage());
+        }
+        return comuna;
+    }
+    
+    public static SucursalDto buscarSucursal(String nombre)
+    {
+        System.out.println("obtenerSucursal");
+        SucursalDto dto = new SucursalDto();
+        try{
+            Connection conexion = Conexion.Enlace(conn);
+            String query = "SELECT * FROM sucursal WHERE lower(nombresucursal) = lower(?)";
+            PreparedStatement buscar = conexion.prepareStatement(query);
+            buscar.setString(1, nombre);
+            ResultSet rs = buscar.executeQuery();
+            while (rs.next()) {
+                dto.setIdSucursal(rs.getInt("idsucursal"));
+                dto.setNombreSucursal(rs.getString("nombresucursal"));
+                dto.setFono(rs.getString("fono"));
+                dto.setComuna(rs.getInt("idComuna"));
+                dto.setDireccion(rs.getString("direccion"));
+            }
+            buscar.close();
+            conexion.close();
+        }catch(SQLException s){
+                System.out.println("Error SQL al buscarSucursal: "+s.getMessage());
+        }catch(Exception e){
+                System.out.println("Error al buscarSucursal:"+e.getMessage());
+        }
+        return dto;
+    }
+    
+    public static ArrayList<SucursalDto> listarTodos(){
+        ArrayList<SucursalDto> lista = new ArrayList<SucursalDto>();
+        try{
+                Connection conexion = Conexion.Enlace(conn);
+                String query = "SELECT * FROM sucursal";
+                PreparedStatement listar = conexion.prepareStatement(query);
+                ResultSet rs = listar.executeQuery();
+                while (rs.next()) {
+                    SucursalDto dto = new SucursalDto();
+                    dto.setIdSucursal(rs.getInt("idsucursal"));
+                    dto.setNombreSucursal(rs.getString("nombresucursal"));
+                    dto.setFono(rs.getString("fono"));
+                    dto.setComuna(rs.getInt("idcomuna"));
+                    dto.setDireccion(rs.getString("direccion"));
+                    lista.add(dto);
+                }
+                listar.close();
+                conexion.close();
+        }catch(SQLException s){
+                System.out.println("Error SQL al listarTodos: "+s.getMessage());
+        }catch(Exception e){
+                System.out.println("Error al listarTodos:"+e.getMessage());
+        }
+        return lista;
+    }
+    
+    public static ArrayList<SucursalDto> listarPorComuna(int idComuna){
+        ArrayList<SucursalDto> lista = new ArrayList<SucursalDto>();
+        try{
+                Connection conexion = Conexion.Enlace(conn);
+                String query = "SELECT * FROM sucursal WHERE idcomuna = ?";
+                PreparedStatement listar = conexion.prepareStatement(query);
+                listar.setInt(1, idComuna);
+                ResultSet rs = listar.executeQuery();
+                while (rs.next()) {
+                    SucursalDto dto = new SucursalDto();
+                    dto.setIdSucursal(rs.getInt("idsucursal"));
+                    dto.setNombreSucursal(rs.getString("nombresucursal"));
+                    dto.setFono(rs.getString("fono"));
+                    dto.setComuna(rs.getInt("idcomuna"));
+                    dto.setDireccion(rs.getString("direccion"));
+                    lista.add(dto);
+                }
+                listar.close();
+                conexion.close();
+        }catch(SQLException s){
+                System.out.println("Error SQL al listarPorSucursal: "+s.getMessage());
+        }catch(Exception e){
+                System.out.println("Error al listarPorSucursal:"+e.getMessage());
+        }
+        return lista;
     }
     
 }
