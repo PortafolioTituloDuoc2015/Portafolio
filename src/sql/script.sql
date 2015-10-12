@@ -724,8 +724,19 @@ BEGIN
 END;
 /
 
+CREATE SEQUENCE Plaza_IdPlaza_SEQ 
+    NOCACHE 
+    ORDER ;
 
 
+create or replace 
+TRIGGER Plaza_IdPlaza
+BEFORE INSERT ON Plaza 
+FOR EACH ROW 
+
+BEGIN 
+    SELECT Plaza_IdPlaza_SEQ.NEXTVAL INTO :NEW.IdPlaza FROM DUAL; 
+END;
 -- Informe de Resumen de Oracle SQL Developer Data Modeler: 
 -- 
 -- CREATE TABLE                            17

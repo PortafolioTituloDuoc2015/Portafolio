@@ -7,15 +7,28 @@ package dto;
  */
 public class PlazaDto {
     private int IdPlaza;
-    private char pasillo;
+    private String pasillo;
     private boolean estado;
     private boolean vigente;
+    private int idSucursal;
 
-    public PlazaDto(int IdPlaza, char pasillo, boolean estado, boolean vigente) {
+    public PlazaDto() {
+    }
+
+    public PlazaDto(int IdPlaza, String pasillo, boolean estado, boolean vigente, int idSucursal) {
         this.IdPlaza = IdPlaza;
         this.pasillo = pasillo;
         this.estado = estado;
         this.vigente = vigente;
+        this.idSucursal = idSucursal;
+    }
+
+    public int getIdSucursal() {
+        return idSucursal;
+    }
+
+    public void setIdSucursal(int idSucursal) {
+        this.idSucursal = idSucursal;
     }
 
     public int getIdPlaza() {
@@ -26,11 +39,11 @@ public class PlazaDto {
         this.IdPlaza = IdPlaza;
     }
 
-    public char getPasillo() {
+    public String getPasillo() {
         return pasillo;
     }
 
-    public void setPasillo(char pasillo) {
+    public void setPasillo(String pasillo) {
         this.pasillo = pasillo;
     }
 

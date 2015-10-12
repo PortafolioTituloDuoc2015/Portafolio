@@ -36,7 +36,7 @@ public class UsuarioDao {
                     agregar.setInt(7, 1);
                 }else if(!dto.isVigente())
                 {
-                    agregar.setInt(7, 1);
+                    agregar.setInt(7, 0);
                 }
                 agregar.setInt(8, dto.getSucursal());
                 agregar.setInt(9, dto.getCargo());

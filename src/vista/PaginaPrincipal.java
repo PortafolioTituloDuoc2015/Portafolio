@@ -46,6 +46,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         mnuCargos = new javax.swing.JMenuItem();
         mnuUsuarios = new javax.swing.JMenuItem();
         mnuServicios = new javax.swing.JMenuItem();
+        mnuPlaza = new javax.swing.JMenuItem();
         mnuLogOut = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -85,6 +86,14 @@ public class PaginaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(mnuServicios);
+
+        mnuPlaza.setText("Plazas");
+        mnuPlaza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuPlazaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuPlaza);
 
         mnuLogOut.setText("Log out");
         mnuLogOut.addActionListener(new java.awt.event.ActionListener() {
@@ -195,6 +204,23 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         log.setDefaultCloseOperation(2);
     }//GEN-LAST:event_mnuLogOutActionPerformed
 
+    private void mnuPlazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPlazaActionPerformed
+        // TODO add your handling code here:
+        if(CargoDao.obtenerCargo(dtoReturn.getCargo()).equalsIgnoreCase("administrador") 
+                && dtoReturn.isVigente())
+        {
+            Plaza plaza = new Plaza();
+            plaza.setVisible(true);
+            plaza.setLocationRelativeTo(null);
+            plaza.setResizable(false);
+            plaza.setTitle("USUARIOS");
+            plaza.setDefaultCloseOperation(2);
+        }else
+        {
+            JOptionPane.showMessageDialog(null, "NO TIENES PERFIL DE ADMINISTRADOR PARA ENTRAR\nO NO ESTA VIGENTE LA CUENTA.\nCONTACTE AL ADMINISTRADOR SI ESTA INFORMACION NO ES CORRECTA");
+        }
+    }//GEN-LAST:event_mnuPlazaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -236,6 +262,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     public static javax.swing.JLabel lblIdUser;
     private javax.swing.JMenuItem mnuCargos;
     private javax.swing.JMenuItem mnuLogOut;
+    private javax.swing.JMenuItem mnuPlaza;
     private javax.swing.JMenuItem mnuServicios;
     private javax.swing.JMenuItem mnuSucursales;
     private javax.swing.JMenuItem mnuUsuarios;
