@@ -3,7 +3,26 @@
 --   sitio:      Oracle Database 11g
 --   tipo:      Oracle Database 11g
 
+create table uf (idUf int,fecha date, valor int)
 
+CREATE SEQUENCE  UF_SEQ
+MINVALUE 1 MAXVALUE 999999999999999999999999999 
+INCREMENT BY 1 START WITH 5 NOCACHE  ORDER  NOCYCLE ;
+
+
+
+CREATE OR REPLACE TRIGGER UF_SEQ_TRG
+BEFORE INSERT ON uf 
+FOR EACH ROW 
+
+BEGIN 
+    SELECT Trabajador_IdTrabajador_SEQ.NEXTVAL INTO :NEW.IdTrabajador FROM DUAL; 
+END;
+
+BEGIN 
+    SELECT UF_SEQ.NEXTVAL INTO :NEW.idUf FROM DUAL; 
+END;
+/
 
 CREATE TABLE BoletaEstacionamiento 
     ( 
@@ -28,7 +47,7 @@ ALTER TABLE BoletaEstacionamiento
 
 CREATE TABLE BoletaServicios 
     ( 
-     codigoBoletaS INTEGER  NOT NULL , 
+     codigoBoletaS INTEGER, 
      NumBoletaG INTEGER  NOT NULL , 
      Fecha DATE  NOT NULL , 
      Total INTEGER  NOT NULL , 
@@ -124,9 +143,9 @@ CREATE TABLE PagoEstacionamiento
      Descuento INTEGER , 
      Liberado CHAR (1) , 
      IdTicket INTEGER  NOT NULL , 
-     IdBoletaEstacionamiento INTEGER  NOT NULL , 
+     IdBoletaEstacionamiento INTEGER , 
      observacion VARCHAR2 (500) , 
-     tiempo DATE  NOT NULL 
+     tiempo INTEGER  NOT NULL 
     ) 
 ;
 
@@ -151,7 +170,7 @@ CREATE TABLE PagoServicios
     ( 
      IdPagoServicios INTEGER  NOT NULL , 
      IdOrdenServicio INTEGER  NOT NULL , 
-     IdBoletaServicios INTEGER  NOT NULL 
+     IdBoletaServicios INTEGER 
     ) 
 ;
 
@@ -319,7 +338,8 @@ ALTER TABLE Vehiculo
 CREATE TABLE relacionOrdenServicio 
     ( 
      Servicio_IdServicio INTEGER  NOT NULL , 
-     OrdenServicio_IdOrdenServicio INTEGER  NOT NULL 
+     OrdenServicio_IdOrdenServicio INTEGER  NOT NULL,
+	 idrelacionordenservicio INTEGER NOT NULL
     ) 
 ;
 
@@ -737,6 +757,70 @@ FOR EACH ROW
 BEGIN 
     SELECT Plaza_IdPlaza_SEQ.NEXTVAL INTO :NEW.IdPlaza FROM DUAL; 
 END;
+/
+
+
+CREATE SEQUENCE pagoestacionamiento_seq
+    NOCACHE 
+    ORDER 
+
+CREATE OR REPLACE TRIGGER pagoestacionamiento_seq_trg
+BEFORE INSERT ON pagoestacionamiento 
+FOR EACH ROW 
+BEGIN 
+    SELECT pagoestacionamiento_seq.NEXTVAL INTO :NEW.idpagoestacionamiento FROM DUAL; 
+END;
+/
+
+CREATE SEQUENCE boletaestacionamiento_seq
+    NOCACHE 
+    ORDER 
+
+CREATE OR REPLACE TRIGGER boletaestacionamiento_seq_trg
+BEFORE INSERT ON boletaestacionamiento 
+FOR EACH ROW 
+BEGIN 
+    SELECT boletaestacionamiento_seq.NEXTVAL INTO :NEW.idboletaestacionamiento FROM DUAL; 
+END;
+/
+
+CREATE SEQUENCE relacionordenservicio_seq
+    NOCACHE 
+    ORDER 
+
+CREATE OR REPLACE TRIGGER relacionordenservicio_seq_trg
+BEFORE INSERT ON relacionordenservicio 
+FOR EACH ROW 
+BEGIN 
+    SELECT relacionordenservicio_seq.NEXTVAL INTO :NEW.idrelacionordenservicio FROM DUAL; 
+END;
+/
+
+
+CREATE TABLE COMISIONES
+(
+IDCOMISIONES INTEGER PRIMARY KEY,
+IDORDENSERVICIO INTEGER,
+FECHA DATE,
+TOTAL INTEGER,
+DIEZPORCIENTO INTEGER,
+CINCOPORCIENTO INTEGER
+);
+
+
+CREATE SEQUENCE COMISIONES_SEQ
+    NOCACHE 
+    ORDER 
+
+CREATE OR REPLACE TRIGGER COMISIONES_SEQ_TRG
+BEFORE INSERT ON COMISIONES 
+FOR EACH ROW 
+BEGIN 
+    SELECT COMISIONES_SEQ.NEXTVAL INTO :NEW.IDCOMISIONES FROM DUAL; 
+END;
+/
+
+
 -- Informe de Resumen de Oracle SQL Developer Data Modeler: 
 -- 
 -- CREATE TABLE                            17

@@ -43,10 +43,11 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mnuSucursales = new javax.swing.JMenuItem();
-        mnuCargos = new javax.swing.JMenuItem();
+        mnuLavaAuto = new javax.swing.JMenuItem();
         mnuUsuarios = new javax.swing.JMenuItem();
         mnuServicios = new javax.swing.JMenuItem();
         mnuPlaza = new javax.swing.JMenuItem();
+        mnuReportes = new javax.swing.JMenuItem();
         mnuLogOut = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -63,13 +64,13 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(mnuSucursales);
 
-        mnuCargos.setText("Cargos");
-        mnuCargos.addActionListener(new java.awt.event.ActionListener() {
+        mnuLavaAuto.setText("Lava Auto");
+        mnuLavaAuto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuCargosActionPerformed(evt);
+                mnuLavaAutoActionPerformed(evt);
             }
         });
-        jMenu1.add(mnuCargos);
+        jMenu1.add(mnuLavaAuto);
 
         mnuUsuarios.setText("Usuarios");
         mnuUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +95,14 @@ public class PaginaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(mnuPlaza);
+
+        mnuReportes.setText("Reportes");
+        mnuReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuReportesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuReportes);
 
         mnuLogOut.setText("Log out");
         mnuLogOut.addActionListener(new java.awt.event.ActionListener() {
@@ -143,23 +152,6 @@ public class PaginaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "NO TIENES PERFIL DE ADMINISTRADOR PARA ENTRAR\nO NO ESTA VIGENTE LA CUENTA.\nCONTACTE AL ADMINISTRADOR SI ESTA INFORMACION NO ES CORRECTA");
         }
     }//GEN-LAST:event_mnuSucursalesActionPerformed
-
-    private void mnuCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCargosActionPerformed
-        // TODO add your handling code here:
-        if(CargoDao.obtenerCargo(dtoReturn.getCargo()).equalsIgnoreCase("administrador") 
-                && dtoReturn.isVigente())
-        {
-            Cargo cargo = new Cargo();
-            cargo.setVisible(true);
-            cargo.setLocationRelativeTo(null);
-            //sucursal.setResizable(false);
-            cargo.setTitle("CARGOS");
-            cargo.setDefaultCloseOperation(2);
-        }else
-        {
-            JOptionPane.showMessageDialog(null, "NO TIENES PERFIL DE ADMINISTRADOR PARA ENTRAR\nO NO ESTA VIGENTE LA CUENTA.\nCONTACTE AL ADMINISTRADOR SI ESTA INFORMACION NO ES CORRECTA");
-        }
-    }//GEN-LAST:event_mnuCargosActionPerformed
 
     private void mnuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuUsuariosActionPerformed
         // TODO add your handling code here:
@@ -221,6 +213,40 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mnuPlazaActionPerformed
 
+    private void mnuReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuReportesActionPerformed
+        // TODO add your handling code here:
+        if(CargoDao.obtenerCargo(dtoReturn.getCargo()).equalsIgnoreCase("administrador") 
+                && dtoReturn.isVigente())
+        {
+            Comisiones comisiones = new Comisiones();
+            comisiones.setVisible(true);
+            comisiones.setLocationRelativeTo(null);
+            comisiones.setResizable(false);
+            comisiones.setTitle("REPORTES");
+            comisiones.setDefaultCloseOperation(2);
+        }else
+        {
+            JOptionPane.showMessageDialog(null, "NO TIENES PERFIL DE ADMINISTRADOR PARA ENTRAR\nO NO ESTA VIGENTE LA CUENTA.\nCONTACTE AL ADMINISTRADOR SI ESTA INFORMACION NO ES CORRECTA");
+        }
+    }//GEN-LAST:event_mnuReportesActionPerformed
+
+    private void mnuLavaAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLavaAutoActionPerformed
+        // TODO add your handling code here:
+        if(CargoDao.obtenerCargo(dtoReturn.getCargo()).equalsIgnoreCase("administrador") 
+                && dtoReturn.isVigente())
+        {
+            LavaAuto lavaAuto = new LavaAuto();
+            lavaAuto.setVisible(true);
+            lavaAuto.setLocationRelativeTo(null);
+            lavaAuto.setResizable(false);
+            lavaAuto.setTitle("LavaAuto");
+            lavaAuto.setDefaultCloseOperation(2);
+        }else
+        {
+            JOptionPane.showMessageDialog(null, "NO TIENES PERFIL DE ADMINISTRADOR PARA ENTRAR\nO NO ESTA VIGENTE LA CUENTA.\nCONTACTE AL ADMINISTRADOR SI ESTA INFORMACION NO ES CORRECTA");
+        }
+    }//GEN-LAST:event_mnuLavaAutoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -260,9 +286,10 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     public static javax.swing.JLabel lblIdUser;
-    private javax.swing.JMenuItem mnuCargos;
+    private javax.swing.JMenuItem mnuLavaAuto;
     private javax.swing.JMenuItem mnuLogOut;
     private javax.swing.JMenuItem mnuPlaza;
+    private javax.swing.JMenuItem mnuReportes;
     private javax.swing.JMenuItem mnuServicios;
     private javax.swing.JMenuItem mnuSucursales;
     private javax.swing.JMenuItem mnuUsuarios;
